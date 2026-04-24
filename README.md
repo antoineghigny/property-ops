@@ -1,96 +1,87 @@
-# Property-Ops
+# 🏛️ Property-Ops
+> **The Residential Property Acquisition OS — From raw listing to Bank-Ready dossier.**
 
-Property-Ops is an agentic operating system for residential property analysis, financing preparation, due diligence, and bank package generation.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node.js: v20+](https://img.shields.io/badge/Node.js-v20+-green.svg)](https://nodejs.org/)
+[![Built for: Gemini & Claude](https://img.shields.io/badge/Built%20for-Gemini%20%26%20Claude-orange.svg)](https://github.com/google-gemini/gemini-cli)
 
-The intended behavior is the same across Gemini CLI, Claude Code, and Codex: onboarding first when the borrower profile is not ready, then an autonomous precision-first screen for a plain listing URL.
+**Property-Ops** is an AI-native screening engine designed for professional-grade real estate due diligence. It transforms a single URL into a 1000+ word corporate feasibility study, including net-net yield modeling, environmental risk audits, and automated bank packages.
 
-It follows the same operating-system pattern throughout the repo:
+---
 
-- ingest a listing or manual case
-- resolve the exact property identity
-- enrich it with sourced market, policy, and lender context
-- compute decision signals and price guardrails
-- generate reports, visit checklists, document checklists, and bank packages
-- track decisions and compare multiple properties over time
+## 🌟 Key Highlights
 
-## Core Principles
+- **🤖 Autonomous Feasibility Study:** Executes a mandatory strategy interview followed by deep hyper-local web research on employment hubs and micro-economics.
+- **💰 Advanced Financial Engineering:** Integrated support for **Asset-Backed Financing (Pledging)** and **Differentiated Scenario Analysis** (Home vs. Investment).
+- **📄 Automated Bank Package:** Generates a complete, professional PDF/HTML dossier for lenders with a single command.
+- **🔍 Surgical Risk Audit:** Automated checks for soil pollution (BDES), flood risks (WalOnMap), and urban planning compliance.
+- **🌍 Agnostic & Scalable:** Fully customizable via regional **YAML Packs** (Registration duties, energy policies, and construction costs).
 
-- No fake data.
-- No silent assumptions.
-- Official and open-data sources first.
-- Bank heuristics are modeled separately from legal rules.
-- Missing information is explicit: `unknown` or `manual_review_required`.
+---
 
-## Quick Start
+## 🚀 Quick Start
 
+### 1. Installation
 ```bash
+git clone https://github.com/antoineghigny/property-ops.git
 cd property-ops
 npm install
-npx playwright install chromium
-
 npm run init-user
-npm run doctor
-npm run profile-status
 ```
 
-`npm run init-user` copies the tracked `*.example.yml` templates into local user-owned files. Those local files are ignored by `.gitignore`, along with case folders and tracker outputs, so personal borrower data and private deal analysis stay out of Git by default.
+### 2. Configuration
+Fill your financial profile in `config/profile.yml` and define your investment goals in `config/strategy.yml`.
 
-## Gemini CLI
-
-Open Gemini from the repository root so it can load the local workspace commands:
-
+### 3. Run your first screen
 ```bash
-cd property-ops
-gemini
+# Using Gemini CLI or Claude Code
+/property-ops https://www.immoweb.be/fr/annonce/maison/a-vendre/...
 ```
 
-Then type `/` to list the available `property-ops` slash commands.
+---
 
-If Gemini was already open before the `.gemini/commands/` files existed, restart the session from the `property-ops/` directory.
+## 📂 Project Structure
 
-On the first Gemini interaction, Property-Ops now checks whether `config/profile.yml` is still missing, incomplete, or placeholder-based. If it is, Gemini should enter borrower onboarding before treating finance-fit or bank-readiness outputs as personalized.
-
-The agent-facing onboarding path is `/property-ops-profile`. It should ask targeted borrower questions, update `config/profile.yml`, re-check readiness, and only then allow a personalized finance workflow.
-
-The default `/property-ops <listing-url>` behavior is intended to be autonomous and precision-first. It should use the deep `screen` pipeline rather than merely chaining lightweight suggestions.
-
-The same repo rules are now documented for Claude Code and Codex through [CLAUDE.md](/home/antoine/repository/buy/property-ops/CLAUDE.md), [AGENTS.md](/home/antoine/repository/buy/property-ops/AGENTS.md), and [.claude/skills/property-ops/SKILL.md](/home/antoine/repository/buy/property-ops/.claude/skills/property-ops/SKILL.md).
-
-The repository is meant to track examples and shared system logic, not your real borrower profile or private case data.
-
-## Main Commands
-
-```bash
-npm run init-user
-npm run profile-status
-npm run screen -- --url "https://example.com/listing"
-npm run ingest -- --url "https://example.com/listing"
-npm run resolve-identity -- --case my-case
-npm run analyze -- --case my-case
-npm run collect-docs -- --case my-case
-npm run bank-package -- --case my-case --pdf
-npm run visit -- --case my-case
-npm run compare -- --cases my-case,other-case
-npm run tracker
+```text
+├── adapters/           # Connectors to external data (Market, Notary, Energy)
+├── config/             # User-specific profile and strategy (Protected by gitignore)
+├── engine/             # Core logic
+│   ├── finance/        # Mortgage & Yield modeling
+│   ├── pricing/        # Intrinsic value & Market gap analysis
+│   ├── decision-engine/# Scoring and Go/No-Go logic
+│   └── artifacts/      # Expert report & PDF generators
+├── packs/              # Regional policy rules (Duties, Energy, Construction)
+├── scripts/            # CLI entry points and maintenance tools
+└── modes/              # AI Agent operational protocols
 ```
 
-## Project Layout
+---
 
-- `config/`: borrower, lender, and strategy settings
-- `data/cases/`: canonical case storage
-- `packs/`: country, region, lender, and source-policy packs
-- `engine/`: core analysis logic
-- `adapters/`: data-source and portal adapters
-- `templates/`: markdown and HTML rendering templates
-- `scripts/`: CLI and verification scripts
-- `.gemini/commands/`: Gemini CLI slash commands
-- `GEMINI.md`: Gemini persistent workspace context
+## 🛠️ Tech Stack
 
-## Notes
+- **Runtime:** Node.js (ESM)
+- **Validation:** [Zod](https://zod.dev/) for strict data contract enforcement.
+- **Automation:** [Playwright](https://playwright.dev/) for listing ingestion.
+- **Reporting:** Custom Markdown-to-HTML/PDF engine for bank packages.
+- **AI Integration:** Optimized for agentic workflows (Gemini CLI, Claude Code).
 
-- Belgium is modeled through `country -> region -> rule pack`.
-- Real official adapters are wired where practical, especially:
-  - Statbel municipality-level price medians
-  - Belgium regional policy packs
-  - Brussels / Wallonia / Flanders policy and registry references
-- Where a public source is lookup-only or operationally fragile, the system produces a live lookup URL and `manual_review_required` instead of inventing a result.
+---
+
+## 🤝 Contributing
+
+Property-Ops is open-source. We welcome contributions to expand regional **Packs** (France, Luxembourg, etc.) or new **Adapters** (local market data).
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+---
+
+## 🛡️ Security & Privacy
+
+**Privacy by Design:** `Property-Ops` is built to run locally. All sensitive financial data (income, assets, specific cases) is stored in the `config/` and `data/` directories, which are strictly excluded from git tracking via `.gitignore`.
+
+---
+<p align="center">Built with precision by [Antoine Ghigny](https://github.com/antoineghigny) • Part of the Career-Ops Ecosystem</p>
