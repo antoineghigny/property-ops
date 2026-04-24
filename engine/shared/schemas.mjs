@@ -58,7 +58,7 @@ export const PropertyCaseSchema = z.object({
   }),
   typology: z.object({
     property_kind: z.enum(['house', 'apartment', 'income_building', 'land', 'mixed']).nullable().optional(),
-    condition_kind: z.enum(['new', 'old', 'renovated', 'unknown']).nullable().optional(),
+    condition_kind: z.enum(['new', 'old', 'renovated', 'structural_renovation', 'ruin', 'unknown']).nullable().optional(),
     construction_year: z.number().nullable().optional(),
     renovation_year: z.number().nullable().optional(),
     facades_count: z.number().nullable().optional(),
@@ -105,11 +105,11 @@ export const PropertyCaseSchema = z.object({
     certificate_valid_until: z.string().nullable().optional(),
     certificate_recommendations: z.array(z.string()).optional(),
     regional_obligations: z.array(z.string()).optional(),
-  }).default({}),
+  }).catchall(z.any()).default({}),
   meta: z.object({
     workflow_state: z.string().optional(),
-  }).optional().default({}),
-});
+  }).catchall(z.any()).default({}),
+}).passthrough();
 
 export const BorrowerProfileSchema = z.object({
   borrower: z.object({

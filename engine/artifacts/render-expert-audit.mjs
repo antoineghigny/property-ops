@@ -91,8 +91,8 @@ export function renderExpertAudit(caseData, analysis, profile) {
 
   report += `\n## 🏗️ TECHNICAL & VISUAL AUDIT\n`;
   report += `- **Energy Compliance:** EPC ${peb} provides a ${['A', 'B'].includes(peb) ? 'strong performance moat' : 'technical liability'} in the current regulatory environment.\n`;
-  report += `- **Works Provision:** Our model has allocated **${formatCurrency(analysis.derived_metrics.works.immediate_works_estimate)}** for immediate refresh and technical compliance.\n`;
-  report += `- **Expert Observation:** Visual audit of technical systems and structural markers (photos) justifies the current works contingency.\n`;
+  report += `- **Works Provision:** Our model has allocated **${formatCurrency(analysis.derived_metrics.works.immediate_works_estimate)}** for immediate refresh and technical compliance (Tier: ${caseData.typology.condition_kind?.toUpperCase()}).\n`;
+  report += `- **Expert Observation:** Visual audit confirms a **${caseData.typology.condition_kind === 'structural_renovation' ? 'STRIPPED SHELL' : 'standard'}** state, justifying the aggressive works contingency of **${formatCurrency(analysis.derived_metrics.works.immediate_works_estimate + (analysis.derived_metrics.works.contingency_reserve || 0))}** (Total incl. contingency).\n`;
 
   report += `\n## 🚀 THE ATTACK PLAN: STRATEGIC LEVERS\n`;
   report += `1. **Valuation Alignment:** At ${formatCurrency(pricing.asking_price_per_m2)}/m2, the valuation is anchored on **${pricing.valuation_source}**. Use this to align the final offer with intrinsic neighborhood value.\n`;

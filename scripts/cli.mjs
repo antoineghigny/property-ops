@@ -61,7 +61,9 @@ async function performAnalysis(caseId, args = {}) {
   const resolved = shouldResolve ? await resolveIdentity(caseId) : current;
   const analysis = await enrichCase(resolved);
   const reportMarkdown = renderReport(resolved, analysis);
+  const deepReportMarkdown = renderDeepReport(resolved, analysis, analysis.profile_context);
   saveArtifacts(caseId, analysis, reportMarkdown);
+  saveCaseArtifact(caseId, 'deep-report.md', deepReportMarkdown);
   setWorkflowState(caseId, 'scored');
   appendDecisionLog(caseId, args.provisional ? 'analysis_refreshed_provisional' : 'analysis_refreshed', null, analysis.decisions, ['The full analysis pipeline was executed.']);
   return { resolved, analysis, reportMarkdown, profileStatus, identityAttempted: shouldResolve };
