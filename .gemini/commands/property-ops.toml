@@ -65,30 +65,35 @@ If "$ARGUMENTS" looks like a property listing URL:
     - **Liquidation:** Sell assets for cash downpayment.
   *(Do NOT proceed with any tool calls or research until the user answers via the interactive component).*
 
-- **PHASE 2: THE "DUE DILIGENCE" INVESTIGATION (PROFESSIONAL INTEGRITY)**
-  Once the user answers, you MUST perform extensive web research using `google_web_search`. You act as an independent auditor providing a 360-degree view.
-  Execute at least 5-6 parallel web searches covering:
-  1. **Environmental & Context Audit:** Search for noise (airport/train), industrial zonings, green spaces, or future public infrastructure projects in the specific street.
-  2. **Market Pulse:** Search for "[Street] [City] real estate trends" or "neighborhood development [City]". Identify specific local growth drivers.
-  3. **Visual & Technical Audit (MANDATORY):** Analyze the image URLs from the listing. Report objectively on the state of technical systems, structural integrity (cracks/dampness), and energy features.
-  4. **Valuation Data:** Search for the **"Immoweb Price Map"** or **"Realo valuation"** for the postcode.
-  5. **Construction Market Rates (CRITICAL):** Search for "average renovation cost per m2 [Country] [Current Year]" broken down by "Refresh", "Complete", and "Structural/Shell".
+- **PHASE 2: THE "DUE DILIGENCE" INVESTIGATION & AI EXTRACTION**
+  1. **RAW INGESTION:** Use Bash to run `npm run ingest -- --url "<listing-url>"`.
+  2. **DATA TRIAGE (MANDATORY):** Read the generated `data/cases/<case-id>/case.json`. Look at the `listing.raw_dump` field. This is a "Melting Pot" of all page data.
+  3. **AI CLASSIFICATION:** As an expert, you MUST extract and structure the following from the raw dump:
+     - **Technical:** Materiality (stone/brick), age (XVIIe?), state (À rénover/Peinture), heating system, electrical status.
+     - **Identity:** Exact address, postal code, municipality.
+     - **Typology:** Property kind, bedrooms, surface m2.
+     - **Economics:** Asking price, Cadastral Income (RC).
+     - **Energy:** PEB/EPC label, Kwh/m2, CO2.
+  4. **VISUAL AUDIT:** Analyze the images in the listing. Compare the "Bare Bricks" or "Stripped" visual cues with the text.
+  5. **WEB AUDIT:** Execute parallel searches for:
+     - **Local Economics:** Employment hubs (Biopark, Hospitals, etc.) within 5km.
+     - **Market Pulse:** Neighborhood development and realized price per m2.
+     - **Environmental Risks:** Soil pollution (BDES), Flood risk (WalOnMap).
+     - **Construction Rates:** Current renovation costs per m2 for the year/country.
   
-  **CRITICAL STEP (DATA INJECTION):** You MUST inject the following numeric values into the case metadata (`meta`) using the `replace` tool on `case.json` BEFORE running the screen script:
-  - `market_m2_price`: The numeric market value per m2 found in research.
-  - `construction_rates`: A structured object containing the discovered m2 rates (e.g., `{ refresh: 400, complete: 1200, structural: 2000 }`).
+  **CRITICAL STEP (STRUCTURED INJECTION):** You MUST use the `replace` tool on `case.json` to inject ALL your extracted and researched data into the case record BEFORE running the screen script. You MUST set:
+  - `typology.condition_kind`: (new, old, renovated, structural_renovation, ruin)
+  - `meta.market_m2_price`: Numeric value
+  - `meta.construction_rates`: (refresh, complete, structural)
+  - `meta.local_insights`: Array of strings
+  - All other missing technical/energy/identity fields.
 
 - **PHASE 3: SCRIPT EXECUTION**
   Load `modes/analyze.md` and `modes/screen.md`.
-  If profile status is `ready`, use Bash to run `npm run screen -- --url "<listing-url>" --refresh`.
+  Use Bash to run `npm run analyze -- --case "<case-id>"`. (Do NOT use `screen` again as it would overwrite your manual injection).
 
 - **PHASE 4: THE MASTER INVESTMENT MEMORANDUM (OBJECTIVE)**
-  You MUST provide the final report by expanding on the generated `deep-report.md`. Your response must be MASSIVE (1200+ words) and read like a Tier-1 financial advisory note:
-  1. **🎯 DECISION DASHBOARD:** Display the scores and global verdict.
-  2. **⚖️ RISK & OPPORTUNITY MATRIX:** Balance technical flaws or nuisances with economic upsides (Employment hubs, transport, demand).
-  3. **🏗️ TECHNICAL INTEGRITY:** Justify the works budget based on your visual analysis of photos, EPC data, and the market rates you found.
-  4. **💰 FINANCIAL ENGINEERING:** Detail the ROI, Net-Net Cash Flow, and Pledging strategy.
-  5. **🚀 NEGOTIATION STRATEGY:** Practical arguments to align price with the objective intrinsic value based on facts.
+  You MUST provide the final report by expanding on the generated `deep-report.md`. Your response must be MASSIVE (1200+ words) and read like a Tier-1 financial advisory note. Justify your works budget by citing specific phrases from the `raw_dump` or specific photos.
   
   *Your response must be a balanced, professional, and exhaustive expert audit.*
 

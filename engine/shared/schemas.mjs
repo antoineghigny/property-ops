@@ -51,11 +51,12 @@ export const PropertyCaseSchema = z.object({
     title: z.string().nullable().optional(),
     raw_description: z.string().nullable().optional(),
     cleaned_description: z.string().nullable().optional(),
+    raw_dump: z.string().nullable().optional(), // The agnostic melting pot
     images: z.array(z.string()).optional(),
     plans: z.array(z.string()).optional(),
     attached_documents: z.array(z.string()).optional(),
     seller_contact: z.string().nullable().optional(),
-  }),
+  }).catchall(z.any()).optional().default({}),
   typology: z.object({
     property_kind: z.enum(['house', 'apartment', 'income_building', 'land', 'mixed']).nullable().optional(),
     condition_kind: z.enum(['new', 'old', 'renovated', 'structural_renovation', 'ruin', 'unknown']).nullable().optional(),
