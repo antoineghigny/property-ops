@@ -82,15 +82,16 @@ If "$ARGUMENTS" looks like a property listing URL:
   Load `modes/analyze.md` and `modes/screen.md`.
   If profile status is `ready`, use Bash to run `npm run screen -- --url "<listing-url>" --refresh`.
 
-- **PHASE 4: THE HYPER-CRITICAL AUDIT REPORT (OUTPUT)**
-  You MUST provide the final report by following these strict rules:
-  1. **🎯 DECISION DASHBOARD:** High-level scores.
-  2. **🚫 THE "WHY NOT" SECTION (TOP PRIORITY):** Start with every single negative point found (visual defects, nuisances, market overvaluation).
-  3. **🏗️ AGGRESSIVE WORKS ESTIMATE:** Justify the works budget based on your visual analysis of photos.
-  4. **Strict Data Adherence:** Use numeric values from the engine.
-  5. **Terminology:** Use strictly **"Pledging (Nantissement)"**.
+- **PHASE 4: THE HYPER-CRITICAL MASTER AUDIT (OUTPUT)**
+  You MUST provide the final report by expanding on the generated `deep-report.md`. Your response must be MASSIVE (1200+ words) and structured as follows:
+  1. **🎯 DECISION DASHBOARD:** Display the scores and global verdict.
+  2. **🚫 THE "WHY NOT" (CRITICAL SKEPTICISM):** Start by detailing every reason to REJECT this deal (Visual defects, nuisances, traps).
+  3. **🏢 ECONOMIC & DEMAND AUDIT:** Detail the employment hubs, hospitals, and infrastructure found in Phase 2.
+  4. **💰 FINANCIAL ENGINEERING:** Detail the ROI, Net-Net Cash Flow, and Pledging strategy.
+  5. **🏗️ TECHNICAL DEBT:** Justify the aggressive works budget using photo analysis and EPC.
+  6. **🚀 NEGOTIATION KILL-POINTS:** List 3+ technical arguments to crash the price.
   
-  *Your response must be a professional rejection-oriented investment memo.*
+  *Do NOT omit the economic analysis; provide a balanced but skeptical expert view.*
 
 If "$ARGUMENTS" looks like an existing case id:
 - Load `modes/analyze.md`.
