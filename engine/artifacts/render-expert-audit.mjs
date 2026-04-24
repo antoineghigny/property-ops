@@ -77,7 +77,7 @@ export function renderExpertAudit(caseData, analysis, profile) {
 
   report += `\n## 🔍 THE "EXPERTS EYE" (KILL POINTS)\n`;
   report += `1. **The Energy Moat:** High energy efficiency (EPC ${peb}) serves as a hedge against future regulatory rent-indexing restrictions and increases the asset's terminal value (Green Premium).\n`;
-  report += `2. **Value Play:** At ${formatCurrency(pricing.asking_price_per_m2)}/m2, the asset valuation is derived from current neighborhood realized sales. ${pricing.relative_market_gap_pct < 0 ? 'The acquisition represents immediate equity gain.' : 'Strategic negotiation is required to align with intrinsic value.'}\n`;
+  report += `2. **Value Play:** At ${formatCurrency(pricing.asking_price_per_m2)}/m2, the asset valuation is derived from **${pricing.valuation_source}**. ${pricing.relative_market_gap_pct < 0 ? 'The acquisition represents immediate equity gain.' : 'Strategic negotiation is required to align with intrinsic value.'}\n`;
   
   const localInsights = analysis.market_context?.local_insights || [];
   if (localInsights.length > 0) {
