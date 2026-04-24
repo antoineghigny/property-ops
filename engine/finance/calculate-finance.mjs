@@ -56,7 +56,6 @@ export function calculateFinance(caseData, profile, strategy, regionPacks, lende
 
   const purchaseDeedCostEstimate = round(askingPrice * 0.025, 0);
   
-  // DYNAMIC FEES: Read from lender pack rules with safe fallbacks
   const bankFileFeeEstimate = Number(lenderPack?.rules?.bank_file_fee_eur || 500);
   const valuationFeeEstimate = Number(lenderPack?.rules?.valuation_fee_eur || 300);
   const insuranceSetupEstimate = Number(lenderPack?.rules?.insurance_setup_fee_eur || 900);
@@ -84,6 +83,12 @@ export function calculateFinance(caseData, profile, strategy, regionPacks, lende
   const mortgageDeedCostEstimate = loanAmount === null ? null : round(loanAmount * 0.015, 0);
   const totalProjectCost = addIfKnown([askingPrice, cashOutWithoutLoan, mortgageDeedCostEstimate]);
   const totalCashOut = totalProjectCost === null || loanAmount === null ? null : totalProjectCost - loanAmount;
+
+  // VALUE TRAP DETECTION (Expert Logic)
+  const area = caseData.typology.living_area_m2 || 0;
+  const projectCostPerM2 = (totalProjectCost && area > 0) ? totalProjectCost / area : null;
+  const marketM2Price = pricing.intrinsic_value_per_m2 || 0;
+  const isValueTrap = projectCostPerM2 !== null && marketM2Price > 0 && projectCostPerM2 > (marketM2Price * 1.15); // 15% threshold for suicide deals
 
   const monthlyPayment = monthlyPaymentIfKnown(loanAmount, ratePct, durationYears);
   
@@ -167,6 +172,8 @@ export function calculateFinance(caseData, profile, strategy, regionPacks, lende
       contingency_reserve: contingency,
       total_project_cost: totalProjectCost,
       total_cash_out: totalCashOut,
+      project_cost_per_m2: projectCostPerM2,
+      is_value_trap: isValueTrap,
       minimum_cash_to_keep_after_operation: savingsToKeep,
     },
     capital_requirements: {
@@ -205,13 +212,11 @@ export function calculateFinance(caseData, profile, strategy, regionPacks, lende
       { label: 'Total project cost', value: formatCurrency(totalProjectCost) },
       { label: 'Total cash out', value: formatCurrency(totalCashOut) },
       { label: 'Loan amount', value: formatCurrency(loanAmount) },
-      { label: 'Monthly payment', value: formatCurrency(monthlyPayment) },
-      { label: 'Borrower monthly payment cap', value: formatCurrency(strategyMaxMonthly) },
+      { label: 'Cost per m2', value: projectCostPerM2 ? `${round(projectCostPerM2, 0)} €/m²` : 'Unknown' },
       { label: 'Debt ratio', value: baseline.debt_ratio_pct === null ? 'unknown' : `${round(baseline.debt_ratio_pct, 1)}%` },
-      { label: 'Remaining income', value: formatCurrency(baseline.remaining_income) },
       { label: 'Cash Gap (Missing Cash)', value: cashGap && cashGap > 0 ? formatCurrency(cashGap) : 'None' },
-      { label: 'Requires Securities Liquidation', value: (cashGap !== null && cashGap > 0 && assetGap !== null && assetGap === 0) ? 'Yes' : 'No' },
-      { label: 'Borrower profile status', value: borrowerProfileReady ? 'configured' : `not ready (${profileStatus.status || 'unknown'})` },
+      { label: 'Asset Gap (Missing Total)', value: assetGap && assetGap > 0 ? formatCurrency(assetGap) : 'None' },
+      { label: 'Value Trap Alert', value: isValueTrap ? '🚨 YES (Cost > Market)' : '✅ NO' },
     ],
   };
 }

@@ -58,7 +58,7 @@ export const PropertyCaseSchema = z.object({
     seller_contact: z.string().nullable().optional(),
   }).catchall(z.any()).optional().default({}),
   typology: z.object({
-    property_kind: z.enum(['house', 'apartment', 'income_building', 'land', 'mixed']).nullable().optional(),
+    property_kind: z.enum(['house', 'apartment', 'income_building', 'land', 'mixed', 'unknown']).nullable().optional(),
     condition_kind: z.enum(['new', 'old', 'renovated', 'structural_renovation', 'ruin', 'unknown']).nullable().optional(),
     construction_year: z.number().nullable().optional(),
     renovation_year: z.number().nullable().optional(),
