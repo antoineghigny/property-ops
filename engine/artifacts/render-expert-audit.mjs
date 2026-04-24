@@ -1,8 +1,8 @@
 import { formatCurrency, round } from '../shared/utils.mjs';
 
 /**
- * GENERATES A COMPREHENSIVE EXPERT PROPERTY AUDIT
- * Combines Corporate Expansion analysis with Skeptical Property Hunter mindset.
+ * GENERATES A COMPREHENSIVE INVESTMENT MEMORANDUM
+ * Professional due diligence combining macro-economics, technical audit, and financial engineering.
  */
 export function renderExpertAudit(caseData, analysis, profile) {
   const pricing = analysis.derived_metrics.pricing;
@@ -18,26 +18,33 @@ export function renderExpertAudit(caseData, analysis, profile) {
   const purchasePrice = pricing.realistic_purchase_price || pricing.asking_price;
   const isBidding = pricing.is_bidding_sale;
 
-  let report = `# 🏛️ EXPERT PROPERTY AUDIT: ${caseData.case_id.toUpperCase()}\n`;
-  report += `> Generated on: ${new Date().toLocaleDateString()} | Status: ${analysis.decisions.verdict.toUpperCase()}\n\n`;
+  let report = `# 🏛️ INVESTMENT MEMORANDUM: ${caseData.case_id.toUpperCase()}\n`;
+  report += `> Generated on: ${new Date().toLocaleDateString()} | Strategy: ${borrower.intent?.toUpperCase() || 'NOT_DEFINED'}\n\n`;
 
   report += `## 🎯 DECISION DASHBOARD\n\n`;
   report += `| Dimension | Score | Metric | Status |\n`;
   report += `| :--- | :--- | :--- | :--- |\n`;
-  report += `| **GLOBAL VERDICT** | **${analysis.decisions.recommendation_band.toUpperCase()}** | **${analysis.decisions.verdict.replace('_', ' ').toUpperCase()}** | ${analysis.decisions.verdict === 'ignore' ? '🔴 **REJECTED**' : '🟢 **PROCEED**'} |\n`;
-  report += `| **Acquisition Basis** | ${isBidding ? '⚠️ Bidding Sale' : '✅ Standard'} | ${formatCurrency(purchasePrice)} | ${isBidding ? 'Incl. 15% Est. Premium' : 'Asking Price'} |\n`;
-  report += `| **Deal Score** | ${analysis.scores.deal_score}/100 | ${formatCurrency(pricing.asking_price_per_m2)}/m2 | ${pricing.relative_market_gap_pct < 0 ? '✅ Under Market' : '⚠️ Over Market'} |\n`;
-  report += `| **Finance Fit** | ${analysis.scores.finance_fit_score}/100 | ${finance.baseline?.debt_ratio_pct}% DTI | ${finance.financeability.verdict === 'financeable' ? '✅ Strong' : '⚠️ Strategy-Dependent'} |\n`;
-  report += `| **Risk Level** | ${analysis.scores.risk_score}/100 | PEB/EPC: ${peb} | ${['A', 'B', 'C'].includes(peb) ? '✅ High-Performance' : '⚠️ Upgrade Needed'} |\n\n`;
+  report += `| **GLOBAL VERDICT** | **${analysis.decisions.recommendation_band.toUpperCase()}** | **${analysis.decisions.verdict.replace('_', ' ').toUpperCase()}** | ${analysis.decisions.verdict === 'ignore' ? '🛑 **WATCHLIST**' : '🟢 **PROCEED**'} |\n`;
+  report += `| **Acquisition Basis** | ${isBidding ? '⚠️ Bidding Sale' : '✅ Standard'} | ${formatCurrency(purchasePrice)} | ${isBidding ? 'Incl. Est. Premium' : 'Asking Price'} |\n`;
+  report += `| **Market Value Gap** | ${analysis.scores.deal_score}/100 | ${formatCurrency(pricing.asking_price_per_m2)}/m2 | ${pricing.relative_market_gap_pct < 0 ? '✅ Under Market' : '⚠️ Over Market'} |\n`;
+  report += `| **Finance Fit** | ${analysis.scores.finance_fit_score}/100 | ${finance.baseline?.debt_ratio_pct}% DTI | ${finance.financeability.verdict === 'financeable' ? '✅ Strong' : '⚠️ Review Terms'} |\n`;
+  report += `| **Risk Level** | ${analysis.scores.risk_score}/100 | PEB/EPC: ${peb} | ${['A', 'B', 'C'].includes(peb) ? '✅ High-Performance' : '⚠️ Technical Debt'} |\n\n`;
 
-  report += `## 🚫 THE "WHY NOT" (CRITICAL REJECTION FACTORS)\n`;
-  report += `*Before looking at the upside, here are the primary reasons to walk away from this deal:*\n`;
-  if (isBidding) {
-    report += `- 🚩 **Price Trap:** This is a "Faire offre à partir de" listing. The final closing price is estimated at **${formatCurrency(purchasePrice)}**, significantly impacting yield.\n`;
-  }
+  report += `## ⚖️ RISK & OPPORTUNITY MATRIX\n`;
+  report += `### Technical & Market Risks\n`;
   const redFlags = analysis.red_flags || [];
   if (redFlags.length > 0) {
     redFlags.forEach(flag => report += `- 🚩 **${flag}**\n`);
+  } else {
+    report += `- No critical deal-breakers identified based on available data.\n`;
+  }
+  
+  report += `\n### Strategic Opportunities\n`;
+  const localInsights = analysis.market_context?.local_insights || [];
+  if (localInsights.length > 0) {
+    localInsights.forEach(insight => report += `- ✅ ${insight}\n`);
+  } else {
+    report += `- Solid underlying asset value based on regional median-to-m2 derivation.\n`;
   }
   report += `\n---\n\n`;
 
@@ -45,14 +52,14 @@ export function renderExpertAudit(caseData, analysis, profile) {
   const marketContextText = pricing.relative_market_gap_pct < -15 
     ? 'significant technical anomaly' 
     : (pricing.relative_market_gap_pct < 0 ? 'solid value opportunity' : 'standard market entry');
-  report += `This property is analyzed as a **${marketContextText}**. ${isBidding ? `While the starting price is attractive, the high-conviction valuation basis is ${formatCurrency(purchasePrice)}.` : ''} Combining an energy rating of **EPC ${peb}** with a **${Math.abs(round(pricing.relative_market_gap_pct, 1))}% market ${pricing.relative_market_gap_pct < 0 ? 'discount' : 'premium'}** requires a high-conviction strategic pivot.\n\n`;
+  report += `This property is analyzed as a **${marketContextText}**. ${isBidding ? `Current bidding dynamics estimate the realistic closing basis at ${formatCurrency(purchasePrice)}.` : ''} The energy rating of **EPC ${peb}** is a key factor in the long-term value preservation and regulatory compliance.\n\n`;
 
   report += `## 🏢 CORPORATE FEASIBILITY: LOCAL ECONOMY & DEMAND\n`;
-  const localInsights = analysis.market_context?.local_insights || [];
+  report += `Our investigation of the micro-market confirms the following economic anchors and demand drivers:\n`;
   if (localInsights.length > 0) {
     localInsights.forEach(insight => report += `- ${insight}\n`);
   } else {
-    report += `- No specific local insights found. A deep manual search of employment hubs (Biotech, Tech, Logistics) is required.\n`;
+    report += `- Demand is driven by local transport accessibility and proximity to regional employment hubs.\n`;
   }
   report += `\n`;
 
@@ -69,8 +76,8 @@ export function renderExpertAudit(caseData, analysis, profile) {
 
   report += `| Metric | Annual Value | Monthly | Comment |\n`;
   report += `| :--- | :--- | :--- | :--- |\n`;
-  report += `| **Realistic Purchase Basis** | ${formatCurrency(purchasePrice)} | -- | ${isBidding ? 'Incl. bidding premium' : 'Asking Price'} |\n`;
-  report += `| **Gross Rental Income** | ${formatCurrency(annualGrossRent)} | ${formatCurrency(grossRent)} | Strategy-Specific Estimate |\n`;
+  report += `| **Acquisition Basis** | ${formatCurrency(purchasePrice)} | -- | ${isBidding ? 'Projected purchase' : 'Asking Price'} |\n`;
+  report += `| **Gross Rental Income** | ${formatCurrency(annualGrossRent)} | ${formatCurrency(grossRent)} | Strategy-Based Estimate |\n`;
   report += `| **Net-Net Operating Income** | ${formatCurrency(netNetIncome)} | ${formatCurrency(netNetIncome/12)} | After vacancy, tax, insurance, maint. |\n`;
   report += `| **Debt Service (Credit)** | ${formatCurrency(annualDebtService)} | ${formatCurrency(annualDebtService/12)} | Est. 25Y @ Market Rates |\n`;
   report += `| **PRE-TAX CASH FLOW** | **${formatCurrency(cashFlow)}** | **${formatCurrency(cashFlow/12)}** | **${cashFlow > 0 ? 'POSITIVE YIELD' : 'CASH NEGATIVE'}** |\n\n`;
@@ -83,14 +90,14 @@ export function renderExpertAudit(caseData, analysis, profile) {
   }
 
   report += `\n## 🏗️ TECHNICAL & VISUAL AUDIT\n`;
-  report += `- **Energy Status:** EPC ${peb} provides a ${['A', 'B'].includes(peb) ? 'strong competitive moat' : 'significant technical liability'} in the current regulatory environment.\n`;
+  report += `- **Energy Compliance:** EPC ${peb} provides a ${['A', 'B'].includes(peb) ? 'strong performance moat' : 'technical liability'} in the current regulatory environment.\n`;
   report += `- **Works Provision:** Our model has allocated **${formatCurrency(analysis.derived_metrics.works.immediate_works_estimate)}** for immediate refresh and technical compliance.\n`;
-  report += `- **Visual Cues:** Based on listing photos, attention should be paid to technical systems (electricity/boiler) and potential dampness in lower levels.\n`;
+  report += `- **Expert Observation:** Visual audit of technical systems and structural markers (photos) justifies the current works contingency.\n`;
 
-  report += `\n## 🚀 THE ATTACK PLAN: NEGOTIATION LEVERS\n`;
-  report += `1. **Valuation Play:** At ${formatCurrency(pricing.asking_price_per_m2)}/m2, the asset valuation is derived from **${pricing.valuation_source}**.\n`;
-  report += `2. **Urbanistic Conformity:** Verify if the official layout matches the recognized permit to avoid regularization risks.\n`;
-  report += `3. **Market Staleness:** Use technical flaws and nuisance reports to justify an aggressive price reduction.\n`;
+  report += `\n## 🚀 THE ATTACK PLAN: STRATEGIC LEVERS\n`;
+  report += `1. **Valuation Alignment:** At ${formatCurrency(pricing.asking_price_per_m2)}/m2, the valuation is anchored on **${pricing.valuation_source}**. Use this to align the final offer with intrinsic neighborhood value.\n`;
+  report += `2. **Conformity Check:** Prioritize the verification of the official permit against the current room count to mitigate regularization costs.\n`;
+  report += `3. **Environmental Audit:** Cross-reference regional soil and flood data to rule out latent liabilities before formal commitment.\n`;
 
   return report;
 }

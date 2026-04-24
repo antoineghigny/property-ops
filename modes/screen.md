@@ -1,33 +1,35 @@
 # Mode: screen
 
-This is the default autonomous path for `/property-ops`. It follows the **HYPER-CRITICAL HUNTER PROTOCOL**.
+This is the default autonomous path for `/property-ops`. It follows the **COMPREHENSIVE DUE DILIGENCE PROTOCOL**.
 
 ## PHASE 1: PRE-FLIGHT INTERVIEW (MANDATORY)
 Before any tool execution or research, the Agent **MUST** ask the user to align the strategy and check assets (Conditional securities question).
 
-## PHASE 2: DEEP SKEPTICAL AUDIT
-Only after receiving user answers, perform the following investigation with a "Guilty until proven innocent" mindset:
+## PHASE 2: DEEP INVESTIGATIVE AUDIT
+Only after receiving user answers, perform the following investigation with a professional, balanced, and exhaustive mindset:
 
-### A. The "Catch" Research
-- **Neighborhood Nuisances:** Actively search for high-voltage lines, noise pollution, high-crime pockets, or unattractive social housing blocks nearby.
-- **Structural History:** Search for mining concessions (Charleroi area), soil subsidence reports, or flood history beyond the official maps.
+### A. Context & Environment Research
+- **Local Ecosystem:** Identify specific demand drivers (Employment hubs like Biotech parks, airports, hospitals, university campuses) within a 5km radius.
+- **Neighborhood Audit:** Systematically search for nuisances (noise, industrial zones) BUT also for upsides (upcoming soft mobility projects, new green spaces, gentrification trends).
+- **Macro-Trends:** Search for recent neighborhood realized sales and future infrastructure development that could impact capital appreciation.
 
-### B. Visual Inspection (Computer Vision Phase)
-Analyze the listing photos (URLs) and report on these 4 pillars:
-1. **Dampness & Mold:** Look for peeling paint or dark stains in corners or baseboards.
-2. **Structure:** Look for diagonal cracks in facades or misaligned door frames.
-3. **Technical Systems:** Look at the electrical panel and boiler. If they look over 20 years old, assume immediate replacement.
-4. **Energy:** Look at the windows. Are they old wood with simple glazing?
+### B. Technical & Visual Audit (Expert Observation)
+Analyze the listing photos (URLs) and report objectively on these 4 pillars:
+1. **Structural Integrity:** Observe facades, window frames, and visible wall conditions. Note any structural cues (cracks or misalignments).
+2. **Technicals:** Evaluate the visible state of the electrical panel, boiler, and kitchen/bathroom systems based on visual "age" markers.
+3. **Humidity:** Scan for typical signs of dampness (peeling paint, stains) in lower levels or corners.
+4. **Energy Features:** Note glazing types, insulation markers, and consistency with the stated EPC/PEB label.
 
-### C. Pessimistic Financial Modeling
-- **Aggressive Works Budget:** If visual audit is unclear or negative, increase the "Heavy Renovation" provision by 25%.
-- **Exit Strategy Risk:** Model a 5-year exit where prices drop by 10% to test the margin of safety.
+### C. Balanced Financial Engineering
+- **Differentiated Modeling:** Produce results for both Home (3% duties) and Investment (12.5% duties) perspectives.
+- **Realistic Works Provision:** Align the works budget with the technical observations (Visual Audit) and EPC requirements.
+- **Yield Precision:** Calculate Net-Net cash-flow including vacancy, maintenance, and regional tax specificities.
 
-## Reporting Standards: The "Why Not" Report
-- **The "Why Not" Header:** Start your summary by listing every single technical, environmental, or market reason to **REJECT** the property.
-- **Visual Evidence:** Reference specific photos (e.g., "Photo 3 shows ancient fuse box").
-- **Negotiation Levers:** Provide a "Kill List" of arguments to crash the price.
+## Reporting Standards: The Master Investment Memorandum
+- **Balanced Perspective:** Provide a **Risk & Opportunity Matrix**. Never focus only on the negative; quantify the growth potential alongside the risks.
+- **Evidence-Based:** Reference specific photos and cite actual companies or projects found during research.
+- **Actionable Strategy:** Provide a clear "Next Steps" plan and specific negotiation levers based on facts.
 
 ## Summary rules:
-- **STRICT SKEPTICISM:** Rapid positive verdicts are a failure. Quality and rejection-seeking are mandatory.
+- **STRICT EXHAUSTIVENESS:** Quality and depth are mandatory. Do NOT skip the micro-economic context.
 - Cite all sources and photo numbers.

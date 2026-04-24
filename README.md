@@ -84,4 +84,4 @@ Property-Ops is open-source. We welcome contributions to expand regional **Packs
 **Privacy by Design:** `Property-Ops` is built to run locally. All sensitive financial data (income, assets, specific cases) is stored in the `config/` and `data/` directories, which are strictly excluded from git tracking via `.gitignore`.
 
 ---
-<p align="center">Built with precision by [Antoine Ghigny](https://github.com/antoineghigny) • Part of the Career-Ops Ecosystem</p>
+<p align="center">Built with precision by [Antoine Ghigny](https://github.com/antoineghigny)</p>
