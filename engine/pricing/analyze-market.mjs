@@ -47,6 +47,10 @@ export function analyzeMarket(caseData, marketReference) {
   }
 
   // 3. METRICS SYNTHESIS
+  const isBiddingPrice = /\b[àa]\s*partir\s*de\b/i.test(caseData.listing?.title || '') || /\bfaire\s*offre\s*([àa]|partir)\b/i.test(caseData.listing?.raw_description || '');
+  const estimationPremium = isBiddingPrice ? 1.15 : 1.0; // Assume 15% higher closing price for bidding sales
+  const realisticPurchasePrice = askingPrice * estimationPremium;
+
   const askingPricePerM2 = askingPrice && livingArea > 0 ? askingPrice / livingArea : 0;
   const absoluteGap = askingPrice && intrinsicValue ? askingPrice - intrinsicValue : 0;
   const relativeGapPct = (askingPrice && intrinsicValue && intrinsicValue > 0) 
@@ -55,6 +59,8 @@ export function analyzeMarket(caseData, marketReference) {
 
   return {
     asking_price: askingPrice,
+    realistic_purchase_price: realisticPurchasePrice,
+    is_bidding_sale: isBiddingPrice,
     asking_price_per_m2: askingPricePerM2,
     intrinsic_value_estimate: intrinsicValue,
     intrinsic_value_per_m2: baseM2Price,
