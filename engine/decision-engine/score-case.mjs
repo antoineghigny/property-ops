@@ -18,58 +18,68 @@ function availabilityScoreFromEvidence(analysis) {
 
 export function scoreCase(caseData, analysis) {
   const pricing = analysis.derived_metrics.pricing;
-  const asking = pricing.asking_price || 0;
   const intrinsicValue = pricing.intrinsic_value_estimate || 0;
   
-  const debtRatio = analysis.derived_metrics.finance.financeability.debt_ratio_pct ?? 100;
-  const remainingIncome = analysis.derived_metrics.finance.financeability.remaining_income ?? 0;
-  const financeVerdict = analysis.derived_metrics.finance.financeability.verdict || 'unknown';
+  const financeMetrics = analysis.derived_metrics.finance;
+  const financeability = financeMetrics.financeability;
+  const debtRatio = financeability.debt_ratio_pct ?? 100;
+  const remainingIncome = financeability.remaining_income ?? 0;
+  const financeVerdict = financeability.verdict || 'unknown';
+  
+  // DYNAMIC THRESHOLDS from Lender Packs & Strategy
+  const dtiLimit = financeability.lender_debt_limit_pct || 40;
+  const incomeFloor = financeability.remaining_income_floor || 1200;
+
   const immediateWorks = analysis.derived_metrics.works.immediate_works_estimate || 0;
   const label = String(caseData.energy?.label || '').toUpperCase();
   const manualReviewCount = analysis.manual_reviews.length;
   const missingDocCount = analysis.documents?.missing?.length || 0;
   const profileReady = analysis.profile_status?.is_finance_ready === true;
 
-  // DEAL SCORE : Basé sur l'écart vs Valeur Intrinsèque (m2 + PEB)
+  // 1. DEAL SCORE (Market Gap based)
   const gapPct = pricing.relative_market_gap_pct;
   const dealScore = clamp(round(
-    (gapPct <= -20 ? 95  // En dessous de 20% de la valeur : pépite
-      : gapPct <= -10 ? 85 // En dessous de 10% : bon deal
-        : gapPct <= 5 ? 70  // Prix de marché
-          : 30)             // Trop cher
+    (gapPct <= -20 ? 95 
+      : gapPct <= -10 ? 85 
+        : gapPct <= 5 ? 70 
+          : 30)
     + (caseData.typology.property_kind === 'house' ? 5 : 0)
-    - (immediateWorks > 40000 ? 15 : 0),
+    - (immediateWorks > 50000 ? 15 : 0),
   0), 0, 100);
 
+  // 2. FINANCE FIT SCORE (Dynamic relative to thresholds)
   const financeFitScore = profileReady
     ? (financeVerdict === 'unknown'
       ? 0
       : clamp(round(
-        (debtRatio <= 35 ? 90
-          : debtRatio <= 40 ? 75
-            : debtRatio <= 45 ? 55
-              : 25)
-        + (remainingIncome >= 1600 ? 10 : remainingIncome >= 1200 ? 5 : -10),
+        (debtRatio <= dtiLimit - 5 ? 90
+          : debtRatio <= dtiLimit ? 75
+            : debtRatio <= dtiLimit + 5 ? 50
+              : 20)
+        + (remainingIncome >= incomeFloor + 400 ? 10 : remainingIncome >= incomeFloor ? 5 : -15),
       0), 0, 100))
     : 0;
 
+  // 3. RISK SCORE
   const riskScore = clamp(round(
     90
     - (['F', 'G'].includes(label) ? 25 : ['D', 'E'].includes(label) ? 10 : 0)
     - (manualReviewCount * 3)
-    - (immediateWorks > 50000 ? 10 : 0),
+    - (immediateWorks > 75000 ? 15 : 0),
   0), 0, 100);
 
+  // 4. DATA CONFIDENCE SCORE
   const dataConfidenceScore = clamp(round(
     availabilityScoreFromEvidence(analysis)
     - (caseData.identity.identity_confidence === 'low' ? 20 : caseData.identity.identity_confidence === 'unknown' ? 35 : 0),
   0), 0, 100);
 
+  // 5. EXECUTION SCORE
   const executionScore = clamp(round(
     90
     - (missingDocCount * 3)
     - (manualReviewCount * 4)
-    - (immediateWorks > 30000 ? 10 : 0),
+    - (immediateWorks > 50000 ? 15 : 0),
   0), 0, 100);
 
   return {
@@ -80,13 +90,13 @@ export function scoreCase(caseData, analysis) {
     execution_score: executionScore,
     why: {
       deal_score: [
-        `Analysis based on intrinsic value: ${intrinsicValue} € (based on m2 and PEB).`,
-        gapPct < 0 ? `Asking price is ${Math.abs(gapPct)}% BELOW the estimated segment value.` : `Asking price is ${gapPct}% ABOVE the estimated segment value.`,
+        `Intrinsic value established at ${intrinsicValue} €.`,
+        gapPct < 0 ? `Property is trading ${Math.abs(gapPct)}% BELOW intrinsic value.` : `Property is trading ${gapPct}% ABOVE intrinsic value.`,
       ],
       finance_fit_score: [
         profileReady
-          ? `Debt ratio baseline: ${round(debtRatio, 1)}%.`
-          : 'Borrower profile is not configured.',
+          ? `Debt ratio is ${round(debtRatio, 1)}% against a ${dtiLimit}% limit.`
+          : 'Borrower profile is incomplete.',
       ],
     },
   };
