@@ -30,12 +30,16 @@ export function analyzeMarket(caseData, marketReference) {
 
     const adjustedM2Price = baseM2Price * energyBonus;
     intrinsicValue = livingArea * adjustedM2Price;
+  } else if (livingArea > 0 && medianAbs) {
+    // CRITICAL FIX: If we have area but no m2 price, do NOT use medianAbs directly.
+    // Instead, try to derive a conservative m2 price from the median (assuming a standard 100m2 house)
+    const derivedM2Price = medianAbs / 100; 
+    intrinsicValue = livingArea * derivedM2Price;
+    manualReviewRequired = true;
   } else if (medianAbs) {
-    // If we only have global median for the area, use it as a rough baseline
     intrinsicValue = medianAbs;
     manualReviewRequired = true;
   } else {
-    // No data found. DO NOT INVENT.
     intrinsicValue = null;
     manualReviewRequired = true;
   }
@@ -55,7 +59,7 @@ export function analyzeMarket(caseData, marketReference) {
     asking_price: askingPrice,
     asking_price_per_m2: askingPricePerM2,
     intrinsic_value_estimate: intrinsicValue,
-    intrinsic_value_per_m2: baseM2Price,
+    intrinsic_value_per_m2: baseM2Price || (intrinsicValue && livingArea > 0 ? intrinsicValue / livingArea : null),
     local_median_price: medianAbs,
     relative_market_gap_pct: round(relativeGapPct, 1),
     manual_review_required: manualReviewRequired,

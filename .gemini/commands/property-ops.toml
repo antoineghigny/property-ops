@@ -64,13 +64,16 @@ If "$ARGUMENTS" looks like a property listing URL:
   *(Do NOT proceed with any tool calls or research until the user answers via the interactive component).*
 
 - **PHASE 2: CORPORATE-LEVEL FEASIBILITY STUDY (DEEP RESEARCH)**
-...
   Once the user answers, you MUST perform extensive, hyper-local web research using `google_web_search`. You act as a Corporate Expansion Analyst.
   Execute at least 3-4 parallel web searches covering:
   1. **Micro-Economics & Employment:** Identify specific companies, hospitals, or infrastructure projects within a 5km radius.
   2. **Rental Market Realities:** Find actual realized rents for the specific typology and strategy in this exact neighborhood.
   3. **Urban & Environmental Risks:** Audit soil pollution (BDES), flood risks (WalOnMap), and upcoming zoning changes.
+  4. **Price per m2 Proof:** Find recent realized sales prices per m2 for similar assets in the neighborhood.
 
+  **CRITICAL STEP:** You MUST extract a numeric value for the "Market Price per m2" from your research and inject it into the case metadata using the `replace` tool on `case.json` (set `meta.market_m2_price`) BEFORE running the screen script. This prevents the system from defaulting to generic municipal medians.
+
+- **PHASE 3: SCRIPT EXECUTION**
 - **PHASE 3: SCRIPT EXECUTION**
   Load `modes/analyze.md` and `modes/screen.md`.
   If profile status is `ready`, use Bash to run `npm run screen -- --url "<listing-url>" --refresh`.
