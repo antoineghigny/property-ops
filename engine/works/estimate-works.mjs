@@ -14,14 +14,14 @@ export function estimateWorks(caseData, constructionPack) {
   const label = String(caseData.energy?.label || '').toUpperCase();
   const condition = caseData.typology.condition_kind || 'unknown';
   
+  // CRITICAL HUNTER MODE: Aggressive coefficients for old/unknown stock
   const rules = constructionPack?.rules || {
-    // Ultimate fallbacks if pack is missing
-    light_refresh: { low_per_m2: 75, high_per_m2: 150 },
-    functional_upgrade: { low_per_m2: 250, high_per_m2: 450 },
-    energy_upgrade_standard: { low_per_m2: 100, high_per_m2: 250 },
-    energy_upgrade_heavy: { low_per_m2: 220, high_per_m2: 500 },
-    heavy_renovation_standard: { low_per_m2: 500, high_per_m2: 900 },
-    heavy_renovation_old_building: { low_per_m2: 700, high_per_m2: 1200 },
+    light_refresh: { low_per_m2: 150, high_per_m2: 300 }, // Was 75-150
+    functional_upgrade: { low_per_m2: 400, high_per_m2: 650 }, // Was 250-450
+    energy_upgrade_standard: { low_per_m2: 250, high_per_m2: 500 },
+    energy_upgrade_heavy: { low_per_m2: 500, high_per_m2: 1000 },
+    heavy_renovation_standard: { low_per_m2: 800, high_per_m2: 1200 },
+    heavy_renovation_old_building: { low_per_m2: 1200, high_per_m2: 2000 }, // Realistic full overhaul
   };
 
   const light = band(area, rules.light_refresh.low_per_m2, rules.light_refresh.high_per_m2);
@@ -32,13 +32,14 @@ export function estimateWorks(caseData, constructionPack) {
     ? band(area, rules.energy_upgrade_heavy.low_per_m2, rules.energy_upgrade_heavy.high_per_m2)
     : band(area, rules.energy_upgrade_standard.low_per_m2, rules.energy_upgrade_standard.high_per_m2);
     
-  const isOldBuilding = condition === 'old';
+  const isOldBuilding = condition === 'old' || condition === 'unknown';
   const heavy = isOldBuilding
     ? band(area, rules.heavy_renovation_old_building.low_per_m2, rules.heavy_renovation_old_building.high_per_m2)
     : band(area, rules.heavy_renovation_standard.low_per_m2, rules.heavy_renovation_standard.high_per_m2);
 
-  const immediate = ['F', 'G'].includes(label) ? energy.central : light.central;
-  const within12Months = ['E', 'F', 'G'].includes(label) ? functional.central : light.central;
+  // Pessimistic allocation: always pick the higher need
+  const immediate = ['E', 'F', 'G'].includes(label) ? energy.central : functional.central;
+  const within12Months = isOldBuilding ? heavy.low : functional.central;
 
   return {
     packages: {
@@ -67,7 +68,7 @@ export function estimateWorks(caseData, constructionPack) {
     works_12_months_estimate: within12Months,
     manual_review_required: true,
     notes: [
-      'Works estimates are explicit estimate-scope outputs, not contractor quotes.',
+      'HUNTER MODE: Provisions are highly aggressive to account for hidden technical debt.',
       'Professional quotes remain required before final commitment.',
     ],
   };

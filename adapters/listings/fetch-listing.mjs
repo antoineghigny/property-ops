@@ -120,8 +120,23 @@ export async function ingestFromUrl(url, requestedCaseId = null) {
 
   const bedrooms = firstMatch(signalText, /(\d+)\s?(?:bedroom|bedrooms|chambre|chambres|slaapkamer|slaapkamers)/i, match => parseIntLike(match[1]))
     ?? firstMatch(bodyText, /(\d+)\s?(?:bedroom|bedrooms|chambre|chambres|slaapkamer|slaapkamers)/i, match => parseIntLike(match[1]));
-  const label = firstMatch(signalText, /\b(?:peb|epc|dpe)\s*[:\-]?\s*([a-g])\b/i, match => match[1].toUpperCase())
-    ?? firstMatch(bodyText, /\b(?:peb|epc|dpe)\s*[:\-]?\s*([a-g])\b/i, match => match[1].toUpperCase());
+
+  // ENHANCED PEB DETECTION
+  let label = firstMatch(signalText, /\b(?:peb|epc|dpe|classe énergétique)\s*[:\-]?\s*([a-g])\b/i, match => match[1].toUpperCase())
+    ?? firstMatch(bodyText, /\b(?:peb|epc|dpe|classe énergétique)\s*[:\-]?\s*([a-g])\b/i, match => match[1].toUpperCase());
+
+  if (!label) {
+    // Check images and icons (common on Immoweb/Zimmo)
+    $('img, span, div').each((_, el) => {
+      const text = $(el).attr('alt') || $(el).attr('class') || '';
+      const match = text.match(/\bpeb[-_\s]?([a-g])\b/i) || text.match(/\bepc[-_\s]?([a-g])\b/i);
+      if (match) {
+        label = match[1].toUpperCase();
+        return false; // break loop
+      }
+    });
+  }
+
   const certificateNumber = firstMatch(bodyText, /(\d{8}-\d{10}-\d{2}-\d)/, match => match[1]);
   const kind = extractPropertyKind(url, signalText, bodyText);
   const facadesCount = firstMatch(bodyText, /(\d+)\s*(?:façades?|facades?|gevels?)/i, match => parseIntLike(match[1]));

@@ -86,6 +86,11 @@ export function renderExpertAudit(caseData, analysis, profile) {
     report += `3. **Location Alpha:** Market demand is driven by local accessibility and specific regional economic hubs. Proximity to transit and employment centers is the primary driver for low vacancy.\n`;
   }
 
+  report += `\n## ⚠️ HIDDEN RISKS & EXPERT CAVEATS\n`;
+  report += `1. **The "Starting Price" Trap:** If the listing mentions "Faire offre à partir de", the €249k is a floor, not a ceiling. Realistically, expect a **10-15% premium** in a competitive bidding environment, which may compress your yield and DTI safety margin.\n`;
+  report += `2. **Urbanistic Conformity (The 4th Bedroom):** Many renovated houses in this hub are originally 2-3 bed workers' houses. Ensure the 4th bedroom is recognized in the official **Permis d'urbanisme**. An unpermitted conversion will lead to a lower bank appraisal and potential regularization fines.\n`;
+  report += `3. **Structural & Environmental Integrity:** Proximity to heavy transit (Tram/Road) and historical mining concessions requires a **Stability Audit** and an official **Division des Mines** consultation to rule out subsidence risks.\n`;
+
   report += `\n## 🚀 NEXT STEPS: THE ATTACK PLAN\n`;
   report += `1. **Technical Validation (CRITICAL):** Verify the official EPC certificate and ensure the current layout is reflected in urban planning records.\n`;
   report += `2. **Regulatory Check:** Confirm if any regional soil status or flood-risk study is required for this specific parcel to rule out liabilities.\n`;
