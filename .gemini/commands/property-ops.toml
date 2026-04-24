@@ -79,12 +79,13 @@ If the profile status is `missing`, `placeholder`, or `incomplete`:
   If profile status is `ready`, use Bash to run `npm run screen -- --url "<listing-url>" --refresh`.
 
 - **PHASE 4: THE MASTER AUDIT REPORT (OUTPUT)**
-  Synthesize everything into a MASSIVE, highly detailed final response (1000+ words).
-  Structure it as a **Premium Financial Advisory Memo**:
-  1. **Macro & Micro Economic Analysis:** Detailed local employment hubs and demographic trends.
-  2. **Custom Financial Engineering:** ROI, Cash-Flow, and Debt Ratio based on the chosen leverage (Lombard vs Cash).
-  3. **Risk & Urban Audit:** Site-specific environmental and zoning risks.
-  4. **The "Expert's Kill Points":** 3+ actionable negotiation levers.
+  You MUST provide the final report by following these strict rules:
+  1. **Decision Dashboard First:** You MUST start your response by displaying the **🎯 DECISION DASHBOARD** table exactly as generated in the `deep-report.md` (or use the data from `analysis.json`).
+  2. **Strict Data Adherence:** Do NOT invent prices or negotiation targets. Use the numeric values calculated by the engine (e.g., `target_price`, `intrinsic_value`, `debt_ratio_pct`). If the engine says the property is undervalued, do NOT suggest a lower price based on generic medians.
+  3. **Expert Narrative:** Synthesize the research from Phase 2 into a MASSIVE, highly detailed final response (1000+ words). Use the structure from `deep-report.md` as your primary source of truth.
+  4. **Terminology:** Use strictly **"Pledging (Nantissement)"** and **"Asset-Backed Financing"**. Never use "Lombard" unless refering to interest-only private banking structures.
+  
+  *Your response must be the professional expansion of the generated audit artifacts.*
 
 
 If "$ARGUMENTS" looks like an existing case id:
