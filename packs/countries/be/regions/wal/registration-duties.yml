@@ -1,0 +1,13 @@
+pack_id: "be-wal-registration-duties"
+kind: "registration_duties"
+country: "BE"
+region: "WAL"
+effective_from: "2025-01-01"
+source_name: "Wallonia registration duties FAQ"
+source_url: "https://www.wallonie.be/sites/default/files/2024-12/R%C3%A9forme_droits_enregistrement-FAQ.pdf"
+rules:
+  default_rate_pct: 12.5
+  owner_occupied_unique_home_rate_pct: 3.0
+  notes:
+    - "Reduced rate applies under conditions for a proper and sole home."
+    - "Manual review is required for eligibility edge cases."

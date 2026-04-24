@@ -1,0 +1,16 @@
+pack_id: "be-vlg-energy"
+kind: "energy"
+country: "BE"
+region: "VLG"
+effective_from: "2023-01-01"
+source_name: "Flanders renovation obligation"
+source_url: "https://www.vlaanderen.be/een-huis-of-appartement-kopen/renovatieverplichting-voor-residentiele-gebouwen"
+rules:
+  renovation_obligation:
+    applies_to_labels:
+      - "E"
+      - "F"
+    target_label: "D"
+    deadline_years: 5
+  notes:
+    - "Residential buildings bought from 2023 with EPC label E or F must be renovated to label D or better within a fixed period."

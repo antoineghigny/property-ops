@@ -1,0 +1,42 @@
+{
+  "case_id": "sample-wavre-house",
+  "source": {
+    "portal": "manual",
+    "listing_url": null,
+    "source_id": null,
+    "collected_at": "2026-04-24T00:00:00.000Z",
+    "listing_status": "active"
+  },
+  "identity": {
+    "raw_address": "Place Bosch 1, 1300 Wavre, Belgium",
+    "municipality": "Wavre",
+    "region": "WAL",
+    "country": "BE"
+  },
+  "listing": {
+    "title": "Compact house in Wavre",
+    "raw_description": "3-bedroom house. Asking price 245000 EUR. PEB E. 118 m2. Small garden.",
+    "cleaned_description": "3-bedroom house. Asking price 245000 EUR. PEB E. 118 m2. Small garden."
+  },
+  "typology": {
+    "property_kind": "house",
+    "condition_kind": "old",
+    "living_area_m2": 118,
+    "land_area_m2": 180,
+    "bedrooms": 3,
+    "bathrooms": 1,
+    "garden_area_m2": 40,
+    "condominium": false
+  },
+  "economics": {
+    "asking_price": 245000,
+    "asking_price_per_m2": 2076
+  },
+  "technical": {},
+  "energy": {
+    "label": "E"
+  },
+  "meta": {
+    "workflow_state": "ingested"
+  }
+}

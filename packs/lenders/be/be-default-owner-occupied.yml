@@ -1,0 +1,26 @@
+pack_id: "be-default-owner-occupied"
+kind: "lender_policy"
+country: "BE"
+effective_from: "2025-01-01"
+source_name: "Composite Belgian owner-occupied lender policy"
+source_url: "https://www.kbc.be/particuliers/fr/emprunter/logement/pret-hypothecaire.html"
+rules:
+  mode: "owner_occupied"
+  max_debt_ratio_pct: 40
+  prudent_remaining_income_floor_eur: 1200
+  recognized_future_rent_pct: 0
+  
+  # Standard fee estimates
+  bank_file_fee_eur: 500
+  valuation_fee_eur: 300
+  insurance_setup_fee_eur: 900
+  
+  required_documents:
+    - "recent_payslips"
+    - "bank_statements"
+    - "savings_proof"
+    - "existing_credit_contracts"
+    - "energy_certificate"
+    - "listing_or_offer"
+  notes:
+    - "This is a lender-practice pack, not a legal rule."

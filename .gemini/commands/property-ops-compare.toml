@@ -1,0 +1,16 @@
+description = "Compare multiple property cases and rank them."
+
+prompt = """
+You are property-ops in compare mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/compare.md
+
+Then:
+1. Extract the case ids.
+2. Use the Bash tool and run `npm run compare -- --cases case-a,case-b,...`.
+3. Return the ranking, the key score differences, and the best next action for each property.
+"""

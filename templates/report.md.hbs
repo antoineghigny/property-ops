@@ -1,0 +1,71 @@
+# Property Analysis: {{caseId}}
+
+**Generated at:** {{generatedAt}}
+**Verdict:** {{decision.verdict}}
+**Recommendation band:** {{decision.recommendation_band}}
+**Next best action:** {{decision.next_best_action}}
+
+## 📊 Performance Scores
+
+| Category | Score | Breakdown |
+| :--- | :--- | :--- |
+| **Deal Score** | {{scores.deal_score}}/100 | {{scores.why.deal_score.[0]}} {{scores.why.deal_score.[1]}} |
+| **Finance Fit** | {{scores.finance_fit_score}}/100 | {{scores.why.finance_fit_score.[0]}} |
+| **Risk Score** | {{scores.risk_score}}/100 | Based on energy, legal and works risk. |
+| **Execution** | {{scores.execution_score}}/100 | Complexity of the project (works + docs). |
+
+---
+
+## 🏗️ Market Proof (intrinsic Value)
+
+{{#each marketLines}}
+* **{{label}}:** {{value}}
+{{/each}}
+
+---
+
+## 🏦 Dual Scenario Comparison
+
+| Metric | **HOME** (Owner-Occupied) | **RENT** (Investment) |
+| :--- | :--- | :--- |
+| **Registration Duties** | 3% (Est.) | 12.5% (Standard) |
+| **Loyer Hypothétique** | N/A | Included (if >0) |
+| **Debt Ratio** | {{scores.why.finance_fit_score.[0]}} | See Finance Section |
+
+---
+
+## 💰 Acquisition Cost Details (Current Mode)
+
+{{#each acquisitionCostLines}}
+* **{{label}}:** {{value}}
+{{/each}}
+
+---
+
+## 🛡️ Risk & Compliance
+
+{{#each riskLines}}
+* **{{label}}:** {{value}}
+{{/each}}
+
+{{#if decision.red_flags.length}}
+### 🚩 Red Flags
+{{#each decision.red_flags}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+{{#if decision.deal_breakers.length}}
+### ❌ Deal Breakers
+{{#each decision.deal_breakers}}
+* {{this}}
+{{/each}}
+{{/if}}
+
+---
+
+## 🚀 Next Steps
+
+{{#each nextSteps}}
+- {{this}}
+{{/each}}

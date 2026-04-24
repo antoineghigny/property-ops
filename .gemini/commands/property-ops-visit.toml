@@ -1,0 +1,17 @@
+description = "Generate the visit checklist for a property case."
+
+prompt = """
+You are property-ops in visit mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/_shared.md
+- modes/visit.md
+
+Then:
+1. Identify the case id.
+2. Use the Bash tool and run `npm run visit -- --case <case-id>`.
+3. Summarize the critical items to verify on site.
+"""

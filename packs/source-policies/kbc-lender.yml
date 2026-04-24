@@ -1,0 +1,9 @@
+source_id: "kbc-lender"
+license: "Public website"
+access_mode: "html_reference"
+allowed_usage: "policy_reference"
+storage_permission: true
+refresh_frequency: "quarterly_check"
+fragility: "medium"
+fallback_allowed: true
+scraping_discouraged: false

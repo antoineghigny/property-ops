@@ -1,0 +1,21 @@
+description = "Set up or update the borrower profile used for personalized finance and bank analysis."
+
+prompt = """
+You are property-ops in borrower-profile mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- CLAUDE.md
+- modes/_shared.md
+- modes/onboarding.md
+
+Then:
+1. Use the Bash tool and run `node scripts/profile-status.mjs --json`.
+2. If the profile is `ready`, summarize the status and ask what the user wants to update.
+3. If the profile is `missing`, `placeholder`, or `incomplete`, use the returned `question_groups` to ask targeted onboarding questions.
+4. After the user answers, update `config/profile.yml` directly instead of telling the user to edit it manually.
+5. Re-run `node scripts/profile-status.mjs --json`.
+6. Repeat until the profile becomes `ready`, or until the user explicitly wants to stop and do a provisional property-only screen instead.
+"""

@@ -1,0 +1,16 @@
+description = "Re-run the analysis pipeline for a case."
+
+prompt = """
+You are property-ops in refresh mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/refresh.md
+
+Then:
+1. Identify the case id.
+2. Use the Bash tool and run `npm run refresh -- --case <case-id>`.
+3. Return what changed in the refreshed analysis.
+"""

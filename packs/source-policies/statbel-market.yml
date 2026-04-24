@@ -1,0 +1,11 @@
+source_id: "statbel-market"
+license: "Open data, free to use"
+access_mode: "bulk_download"
+allowed_usage: "cache_and_query"
+storage_permission: true
+refresh_frequency: "monthly_check"
+fragility: "low"
+fallback_allowed: true
+scraping_discouraged: false
+notes:
+  - "Use the official downloadable TXT ZIP dataset for municipality-level market medians."

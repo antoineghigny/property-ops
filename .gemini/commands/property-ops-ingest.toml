@@ -1,0 +1,21 @@
+description = "Create a canonical property case from a listing URL or a JSON file."
+
+prompt = """
+You are property-ops in ingest mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- CLAUDE.md
+- modes/_shared.md
+- modes/ingest.md
+
+Then:
+1. Extract whether the user passed a listing URL, a JSON file path, or a target case id.
+2. Use the Bash tool and run the matching CLI command yourself:
+   - `npm run ingest -- --url "<listing-url>"`
+   - `npm run ingest -- --json-file "<path-to-json>"`
+3. Do not ask the user to run the command unless execution fails.
+4. Return the created case id and the next recommended command.
+"""

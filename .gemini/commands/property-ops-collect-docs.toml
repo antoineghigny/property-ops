@@ -1,0 +1,17 @@
+description = "Generate the document checklist for the bank, notary, and due-diligence workflow."
+
+prompt = """
+You are property-ops in collect-docs mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/_shared.md
+- modes/collect-docs.md
+
+Then:
+1. Identify the case id.
+2. Use the Bash tool and run `npm run collect-docs -- --case <case-id>`.
+3. Summarize the missing items, lender-required items, and immediate blockers.
+"""

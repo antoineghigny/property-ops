@@ -1,0 +1,12 @@
+pack_id: "be-bru-rent"
+kind: "rent"
+country: "BE"
+region: "BRU"
+effective_from: "2025-05-01"
+source_name: "Brussels reference rents"
+source_url: "https://be.brussels/fr/logement/location/bail-dhabitation/loyers-de-reference"
+rules:
+  reference_rent_policy: "reference_rent_matters"
+  abusive_rent_regime_since: "2025-05-01"
+  notes:
+    - "Use prudence when projecting rent above official reference levels."

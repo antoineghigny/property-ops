@@ -1,0 +1,24 @@
+pack_id: "be-standard-construction"
+kind: "construction_costs"
+country: "BE"
+effective_from: "2025-01-01"
+currency: "EUR"
+rules:
+  light_refresh:
+    low_per_m2: 75
+    high_per_m2: 150
+  functional_upgrade:
+    low_per_m2: 250
+    high_per_m2: 450
+  energy_upgrade_standard:
+    low_per_m2: 100
+    high_per_m2: 250
+  energy_upgrade_heavy:
+    low_per_m2: 220
+    high_per_m2: 500
+  heavy_renovation_standard:
+    low_per_m2: 500
+    high_per_m2: 900
+  heavy_renovation_old_building:
+    low_per_m2: 700
+    high_per_m2: 1200

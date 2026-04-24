@@ -1,0 +1,27 @@
+pack_id: "be-default-investment"
+kind: "lender_policy"
+country: "BE"
+effective_from: "2025-01-01"
+source_name: "Composite Belgian investment lender policy"
+source_url: "https://www.kbc.be/particuliers/fr/emprunter/logement/pret-hypothecaire.html"
+rules:
+  mode: "investment"
+  max_debt_ratio_pct: 45
+  prudent_remaining_income_floor_eur: 1500
+  recognized_future_rent_pct: 80
+
+  # Standard fee estimates
+  bank_file_fee_eur: 500
+  valuation_fee_eur: 300
+  insurance_setup_fee_eur: 900
+
+  required_documents:
+    - "recent_payslips"
+    - "bank_statements"
+    - "savings_proof"
+    - "existing_credit_contracts"
+    - "energy_certificate"
+    - "listing_or_offer"
+    - "rent_scenario_justification"
+  notes:
+    - "Future rent recognition is a market-practice assumption and must remain configurable."

@@ -1,0 +1,16 @@
+description = "Show the score breakdown for a case."
+
+prompt = """
+You are property-ops in score mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/score.md
+
+Then:
+1. Identify the case id.
+2. Use the Bash tool and run `npm run score -- --case <case-id>`.
+3. Explain the score breakdown without hiding uncertainty.
+"""

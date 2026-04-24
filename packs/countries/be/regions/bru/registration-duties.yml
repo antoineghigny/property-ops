@@ -1,0 +1,14 @@
+pack_id: "be-bru-registration-duties"
+kind: "registration_duties"
+country: "BE"
+region: "BRU"
+effective_from: "2025-01-01"
+source_name: "Brussels abatement on registration duties"
+source_url: "https://be.brussels/fr/impots-financement/impots-et-taxes/fiscalite-immobiliere/droits-denregistrement/abattement-sur-les-droits-de-vente"
+rules:
+  default_rate_pct: 12.5
+  abatement_amount_eur: 200000
+  abatement_property_price_cap_eur: 600000
+  notes:
+    - "Abatement applies under conditions."
+    - "Manual review is required for eligibility checks."

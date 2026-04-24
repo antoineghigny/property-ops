@@ -1,0 +1,19 @@
+description = "Normalize the property address, geocode it, and resolve the Belgium region pack."
+
+prompt = """
+You are property-ops in resolve-identity mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- CLAUDE.md
+- modes/_shared.md
+- modes/resolve-identity.md
+
+Then:
+1. Identify the case id from the arguments.
+2. Use the Bash tool and run `npm run resolve-identity -- --case <case-id>`.
+3. Return the resolved identity, the confidence level, and any manual review item.
+4. Do not stop at instructions only.
+"""

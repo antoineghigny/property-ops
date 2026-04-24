@@ -1,0 +1,16 @@
+description = "Show price context, comparables, and pricing guardrails for a case."
+
+prompt = """
+You are property-ops in comps mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/comps.md
+
+Then:
+1. Identify the case id.
+2. Use the Bash tool and run `npm run comps -- --case <case-id>`.
+3. Summarize the market reference, target price, and overpricing or underpricing signal.
+"""

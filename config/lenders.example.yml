@@ -1,0 +1,8 @@
+selected_default_lender: "be-default-owner-occupied"
+lenders:
+  - id: "be-default-owner-occupied"
+    country: "BE"
+    pack: "be-default-owner-occupied"
+  - id: "be-default-investment"
+    country: "BE"
+    pack: "be-default-investment"

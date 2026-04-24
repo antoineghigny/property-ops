@@ -1,0 +1,8 @@
+pack_id: "be-base-registration-duties"
+kind: "registration_duties"
+country: "BE"
+effective_from: "2025-01-01"
+rules:
+  notes:
+    - "Regional rules override base rates."
+  default_currency: "EUR"

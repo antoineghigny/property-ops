@@ -1,0 +1,14 @@
+description = "Build the global tracker across all analyzed property cases."
+
+prompt = """
+You are property-ops in tracker mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/tracker.md
+
+Then run `npm run tracker` and summarize the cases that need attention first.
+Use the Bash tool instead of only telling the user what to run.
+"""

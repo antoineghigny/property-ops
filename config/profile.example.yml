@@ -1,0 +1,62 @@
+borrower:
+  identity:
+    first_name: "Jane"
+    last_name: "Doe"
+    date_of_birth: "1990-01-01"
+    nationality: "Belgian"
+    tax_residency: "Belgium"
+    current_address: "1000 Brussels, Belgium"
+    civil_status: "single"
+    household_dependents: 0
+    household_composition: "single"
+    has_co_borrower: false
+  contact:
+    email: "jane@example.com"
+    phone: "+32-000-000-000"
+  employment:
+    employer: "Acme SA"
+    sector: "Technology"
+    contract_type: "permanent_employee"
+    start_date: "2020-06-01"
+    seniority_months: 48
+    work_fraction: "full_time"
+    function_title: "Senior Engineer"
+    trial_period: false
+    perceived_stability: "high"
+  income:
+    net_monthly: 3700
+    gross_monthly: 5700
+    variable_income: 0
+    bonus: 0
+    thirteenth_month: true
+    existing_rental_income: 0
+    other_recurring_income: 0
+  assets:
+    available_cash: 90000
+    emergency_savings: 20000
+    savings_accounts: 90000
+    securities: 5000
+    crypto: 0
+    other_properties_estimated_value: 0
+    visible_bankable_assets: 95000
+    total_assets_estimated: 95000
+    own_funds_mobilizable: 70000
+    own_funds_to_keep_untouched: 20000
+  liabilities:
+    consumer_loans: 0
+    car_loans: 0
+    student_loans: 0
+    family_loans: 0
+    alimony: 0
+    recurring_commitments: 0
+    existing_mortgages: 0
+  monthly_life:
+    current_rent: 1150
+    household_net_income: 3700
+    fixed_charges: 250
+    insurance: 120
+    food: 450
+    mobility: 180
+    children_costs: 0
+    target_remaining_income: 1200
+    observed_monthly_savings_capacity: 900

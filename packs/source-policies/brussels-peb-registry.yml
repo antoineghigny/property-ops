@@ -1,0 +1,11 @@
+source_id: "brussels-peb-registry"
+license: "Public lookup website"
+access_mode: "interactive_lookup"
+allowed_usage: "lookup_only"
+storage_permission: "limited"
+refresh_frequency: "on_case_refresh"
+fragility: "medium"
+fallback_allowed: true
+scraping_discouraged: true
+notes:
+  - "Prefer a live lookup URL and manual review over bulk scraping."

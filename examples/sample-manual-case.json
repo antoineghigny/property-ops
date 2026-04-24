@@ -1,0 +1,36 @@
+{
+  "case_id": "sample-brussels-apartment",
+  "source": {
+    "portal": "manual",
+    "listing_url": null,
+    "source_id": null,
+    "collected_at": "2026-04-24T00:00:00.000Z",
+    "listing_status": "active"
+  },
+  "identity": {
+    "raw_address": "Rue Royale 2, 1000 Brussels, Belgium",
+    "country": "BE"
+  },
+  "listing": {
+    "title": "Bright apartment near the center",
+    "raw_description": "2-bedroom apartment. Asking price 345000 EUR. PEB C. 92 m2.",
+    "cleaned_description": "2-bedroom apartment. Asking price 345000 EUR. PEB C. 92 m2."
+  },
+  "typology": {
+    "property_kind": "apartment",
+    "condition_kind": "old",
+    "living_area_m2": 92,
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "floor": 2,
+    "condominium": true
+  },
+  "economics": {
+    "asking_price": 345000,
+    "asking_price_per_m2": 3750,
+    "condo_charges": 180
+  },
+  "energy": {
+    "label": "C"
+  }
+}

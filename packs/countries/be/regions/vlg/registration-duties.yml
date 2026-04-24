@@ -1,0 +1,12 @@
+pack_id: "be-vlg-registration-duties"
+kind: "registration_duties"
+country: "BE"
+region: "VLG"
+effective_from: "2025-01-01"
+source_name: "Flanders reduced registration duty"
+source_url: "https://www.vlaanderen.be/belastingen-en-begroting/vlaamse-belastingen/registratiebelasting/verkooprecht/tarieven-in-het-verkooprecht/verlaagd-tarief-in-het-verkooprecht-voor-de-aankoop-van-de-enige-eigen-woning"
+rules:
+  default_rate_pct: 12.0
+  owner_occupied_unique_home_rate_pct: 2.0
+  notes:
+    - "Eligibility changes can depend on transfer timing; manual review is required for edge cases."

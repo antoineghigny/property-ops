@@ -1,0 +1,11 @@
+pack_id: "be-wal-energy"
+kind: "energy"
+country: "BE"
+region: "WAL"
+effective_from: "2025-01-01"
+source_name: "Wallonia PEB information"
+source_url: "https://energie.wallonie.be/home/performance-energetuique-des-batiments/batiments-residentiels/achat-vente-location/registre-des-certificats-peb.html"
+rules:
+  lookup_strategy: "certificate_number_lookup"
+  notes:
+    - "Walloon PEB register is lookup-oriented and should not be treated as a free bulk API."

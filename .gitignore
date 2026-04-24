@@ -1,0 +1,10 @@
+config/profile.yml
+config/lenders.yml
+config/strategy.yml
+data/cases/*
+data/tracker/*
+reports/*
+output/*
+node_modules/
+.env
+.DS_Store

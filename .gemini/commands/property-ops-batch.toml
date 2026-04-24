@@ -1,0 +1,17 @@
+description = "Analyze multiple manual cases from JSON files in sequence."
+
+prompt = """
+You are property-ops in batch mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- modes/_shared.md
+- modes/batch.md
+
+Then:
+1. Extract the comma-separated JSON file paths.
+2. Use the Bash tool and run `npm run batch -- --json-files path-a.json,path-b.json,...`.
+3. Summarize which cases came out strongest and which require manual review.
+"""

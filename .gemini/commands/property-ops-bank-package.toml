@@ -1,0 +1,26 @@
+description = "Generate the underwriting-style bank package for a case, with optional PDF export."
+
+prompt = """
+You are property-ops in bank-package mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- CLAUDE.md
+- modes/_shared.md
+- modes/bank-package.md
+- docs/BANK_PACKAGE.md
+
+Then:
+1. Use the Bash tool and run `node scripts/profile-status.mjs --json`.
+2. If the profile is not `ready`, stop and ask the user to finish onboarding in `config/profile.yml` before generating a bank package.
+3. Identify the case id.
+4. Use the Bash tool.
+5. If the user explicitly asks for a PDF, run:
+   - `npm run bank-package -- --case <case-id> --pdf`
+6. Otherwise run:
+   - `npm run bank-package -- --case <case-id>`
+7. Return the generated artifact paths and the remaining blockers before submission to a bank.
+8. Do not just print the command.
+"""

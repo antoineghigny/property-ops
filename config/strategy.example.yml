@@ -1,0 +1,24 @@
+strategy:
+  mode: "home"
+  holding_horizon: "10_years_plus"
+  main_goal: "owner_occupied"
+  secondary_goal: "future_optional_rental"
+  renovation_tolerance: "medium"
+  regulatory_risk_tolerance: "low"
+  target_geography:
+    - "Brussels"
+    - "Walloon Brabant"
+  preferred_property_types:
+    - "apartment"
+    - "house"
+  budget_max_total: 420000
+  max_psychological_monthly_payment: 1600
+  max_bank_monthly_payment: 1750
+  max_own_funds_to_use: 70000
+  rate_preference: "fixed"
+  duration_preference_years:
+    - 20
+    - 25
+  resale_goal: false
+  future_rental_goal: true
+  urgency: "medium"

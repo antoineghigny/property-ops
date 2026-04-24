@@ -1,0 +1,12 @@
+pack_id: "be-bru-energy"
+kind: "energy"
+country: "BE"
+region: "BRU"
+effective_from: "2025-01-01"
+source_name: "Brussels PEB registry"
+source_url: "https://environnement.brussels/pro/documentation-et-outils/sites-web-et-outils-interactifs/le-registre-des-certificats-peb-des-logements-bruxellois"
+rules:
+  lookup_strategy: "address_or_certificate_lookup"
+  registry_url: "https://www.peb-epb.brussels/certificats-certificaten/"
+  notes:
+    - "The registry exposes address, certificate number, validity, and energy indicator."

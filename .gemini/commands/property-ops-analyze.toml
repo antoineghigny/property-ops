@@ -1,0 +1,22 @@
+description = "Run the full property analysis pipeline: enrichment, scores, price guardrails, and report."
+
+prompt = """
+You are property-ops in analyze mode.
+
+Arguments provided: "$ARGUMENTS"
+
+Load:
+- GEMINI.md
+- CLAUDE.md
+- modes/_shared.md
+- modes/analyze.md
+
+Then:
+1. Use the Bash tool and run `node scripts/profile-status.mjs --json`.
+2. If the profile is not ready, do not run the analysis by default.
+3. Ask the user whether they want onboarding now or an explicit provisional property-only screen.
+4. Only if the user explicitly chooses provisional analysis, run `npm run analyze -- --case <case-id> --provisional`.
+5. If the profile is ready, run `npm run analyze -- --case <case-id>`.
+6. Summarize the verdict, the five scores, the main red flags, and the next best action.
+7. Do not merely restate the command.
+"""
