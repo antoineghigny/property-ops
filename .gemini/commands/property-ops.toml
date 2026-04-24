@@ -25,6 +25,8 @@ property-ops — Command Center
 
 Available commands:
   /property-ops {listing URL or case text}   → deep autonomous screen
+  /property-ops {multi-urls list}            → batch pipeline analysis
+  /property-ops show BUY                     → display full memorandums for all positive cases
   /property-ops-profile                      → borrower onboarding and profile updates
   /property-ops-ingest                       → create a canonical case
   /property-ops-resolve-identity             → normalize address and geocode
@@ -45,55 +47,42 @@ Available commands:
 If the profile status is `missing`, `placeholder`, or `incomplete`:
 - Enter onboarding mode before any finance-sensitive workflow.
 - Load `modes/onboarding.md`.
-- Ask the user for the missing borrower information instead of pretending the profile is configured.
-- Do not run the autonomous screen automatically in that state.
 - Ask for onboarding first, using the returned `question_groups`.
-- After the user answers, update `config/profile.yml` directly and re-run `profile-status`.
 - Only if the user explicitly says they want a provisional property-only screening may you continue.
-- In that provisional case, use:
-  - `npm run screen -- --url "<listing-url>" --provisional`
-- In a provisional screen, you must state that finance fit, offer readiness, and bank readiness are provisional.
 
-If "$ARGUMENTS" looks like a property listing URL:
+### LOGIQUE DE FILTRAGE DU PORTFOLIO
+If "$ARGUMENTS" contains "show BUY" or "voir tous les BUY":
+- **PORTFOLIO AUDIT MODE:**
+  1. Use Bash to run `ls data/cases/` and list all case directories.
+  2. For each case, read its `analysis.json`.
+  3. Filter cases where `decisions.verdict` is "proceed", "prepare_bank", or "negotiate".
+  4. **MASSIVE OUTPUT:** For every filtered case, DISPLAY THE ENTIRE CONTENT of the generated `deep-report.md`.
+  5. Prefix each report with the original listing URL found in `case.json`.
+  *(STRICT RULE: Do NOT summarize. Provide the FULL detailed audit for every BUY candidate).*
+- Stop execution here.
+
+### LOGIQUE MULTI-URL (BATCH)
+If "$ARGUMENTS" contains multiple property listing URLs (space or comma separated):
+- **BATCH MODE ACTIVE:** Inform the user that you are starting a batch analysis.
+- **PHASE 1 (Strategy Interview):** Perform the mandatory strategy interview ONCE for the entire batch.
+- **LOOP EXECUTION:** For each URL provided:
+  1. Use Bash to run `npm run ingest -- --url "<url>"`.
+  2. AI CLASSIFICATION: Extract technicals from the `raw_dump`. Use enums: mixed, house, apartment, structural_renovation, renovated.
+  3. SEARCH: Local Economics, Market Pulse, Construction Rates 2026.
+  4. INJECT: Use `replace` on `case.json` to store extracted findings.
+  5. ANALYZE: Run `npm run analyze -- --case "<case-id>"`.
+- **FINAL SUMMARY:** Show a consolidated table of all results. Offer to run `show BUY` to see the details.
+
+### LOGIQUE SINGLE-URL (STANDARD)
+If "$ARGUMENTS" looks like a single property listing URL:
 - **PHASE 1: PRE-FLIGHT INTERVIEW (MANDATORY)**
-  Before running any automated scripts or searches, you MUST stop and use the **`ask_user` tool** to conduct an interactive interview. You must dynamically adapt the questions to the user's profile:
-  1. Read `config/profile.yml` and look for **`borrower.assets.securities`**.
-  2. **Question 1 (Intent):** Ask if the intent is Home (Residence) or Investment.
-  3. **Question 2 (Strategy):** Ask about the rental strategy (Classic family vs Co-living/Specific demand).
-  4. **Question 3 (Leverage - CONDITIONAL):** ONLY ask this if **`borrower.assets.securities > 0`**. If they have securities, ask whether they prefer:
-    - **Nantissement (Expert Recommendation):** Keep assets and use them as collateral.
-    - **Liquidation:** Sell assets for cash downpayment.
-  *(Do NOT proceed with any tool calls or research until the user answers via the interactive component).*
-
-- **PHASE 2: THE "DUE DILIGENCE" INVESTIGATION & AI EXTRACTION**
-  1. **RAW INGESTION:** Use Bash to run `npm run ingest -- --url "<listing-url>"`.
-  2. **DATA TRIAGE (MANDATORY):** Read the generated `data/cases/<case-id>/case.json`. Look at the `listing.raw_dump` field. This is a "Melting Pot" of all page data.
-  
-  **STRICT DATA DICTIONARY (ENUMS):** When injecting data via the `replace` tool on `case.json`, you MUST use these exact allowed values:
-  - `typology.property_kind`: **house**, **apartment**, **income_building**, **land**, **mixed**, **unknown**
-  - `typology.condition_kind`: **new**, **old**, **renovated**, **structural_renovation**, **ruin**, **unknown**
-  
-  3. **AI CLASSIFICATION:** Extract and structure technical, identity, and economic data from the raw dump. Use the dictionary above.
-  4. **WEB AUDIT:** Execute searches for Local Economics, Market Pulse, and Construction Rates.
-  
-  **CRITICAL STEP (STRUCTURED INJECTION):** Inject ALL your extracted data. Set `workflow_state` to "enriched" BEFORE Phase 3.
-
+  Ask about Intent, Strategy, and Leverage (Conditional if securities > 0) using `ask_user`.
+- **PHASE 2: DUE DILIGENCE & EXTRACTION**
+  Run ingestion, AI triage (Enums required), Web searches, and Data injection into `case.json`.
 - **PHASE 3: SCRIPT EXECUTION**
-  Load `modes/analyze.md` and `modes/screen.md`.
-  Use Bash to run `npm run analyze -- --case "<case-id>"`.
+  Run `npm run analyze -- --case "<case-id>"`.
+- **PHASE 4: MASTER INVESTMENT MEMORANDUM**
+  Display the generated `deep-report.md`. Mandatory tables: Decision Dashboard, Post-Renovation Equity Audit.
 
-- **PHASE 4: THE MASTER INVESTMENT MEMORANDUM (OUTPUT)**
-  You MUST provide the final report by displaying the content of the generated `data/cases/<case-id>/deep-report.md`.
-  **STRICT RULE:** You MUST display the following two tables exactly as generated:
-  1. **🎯 DECISION DASHBOARD**
-  2. **📈 POST-RENOVATION EQUITY AUDIT**
-  
-  *Your response must be a balanced, professional, and exhaustive expert audit.*
-
-If "$ARGUMENTS" looks like an existing case id:
-- Load `modes/analyze.md`.
-- Otherwise, when profile status is `ready`, use Bash to run `npm run analyze -- --case "<case-id>"`.
-- Summarize the result by displaying the generated `deep-report.md`.
-
-If execution fails, explain the concrete failure briefly and only then show the exact fallback command.
+If execution fails, explain the failure and show the fallback command.
 """
