@@ -67,13 +67,16 @@ If "$ARGUMENTS" looks like a property listing URL:
 
 - **PHASE 2: THE "DUE DILIGENCE" INVESTIGATION (PROFESSIONAL INTEGRITY)**
   Once the user answers, you MUST perform extensive web research using `google_web_search`. You act as an independent auditor providing a 360-degree view.
-  Execute at least 4-5 parallel web searches covering:
+  Execute at least 5-6 parallel web searches covering:
   1. **Environmental & Context Audit:** Search for noise (airport/train), industrial zonings, green spaces, or future public infrastructure projects in the specific street.
   2. **Market Pulse:** Search for "[Street] [City] real estate trends" or "neighborhood development [City]". Identify specific local growth drivers.
-  3. **Visual & Technical Audit (MANDATORY):** Analyze the image URLs from the listing. Report objectively on the state of technical systems, structural integrity (cracks/dampness), and energy features (glazing/insulation).
+  3. **Visual & Technical Audit (MANDATORY):** Analyze the image URLs from the listing. Report objectively on the state of technical systems, structural integrity (cracks/dampness), and energy features.
   4. **Valuation Data:** Search for the **"Immoweb Price Map"** or **"Realo valuation"** for the postcode.
+  5. **Construction Market Rates (CRITICAL):** Search for "average renovation cost per m2 [Country] [Current Year]" broken down by "Refresh", "Complete", and "Structural/Shell".
   
-  **CRITICAL STEP:** You MUST extract a numeric value for the "Market Price per m2" and inject it into the case metadata (`meta.market_m2_price`) BEFORE running the screen script.
+  **CRITICAL STEP (DATA INJECTION):** You MUST inject the following numeric values into the case metadata (`meta`) using the `replace` tool on `case.json` BEFORE running the screen script:
+  - `market_m2_price`: The numeric market value per m2 found in research.
+  - `construction_rates`: A structured object containing the discovered m2 rates (e.g., `{ refresh: 400, complete: 1200, structural: 2000 }`).
 
 - **PHASE 3: SCRIPT EXECUTION**
   Load `modes/analyze.md` and `modes/screen.md`.
@@ -83,7 +86,7 @@ If "$ARGUMENTS" looks like a property listing URL:
   You MUST provide the final report by expanding on the generated `deep-report.md`. Your response must be MASSIVE (1200+ words) and read like a Tier-1 financial advisory note:
   1. **🎯 DECISION DASHBOARD:** Display the scores and global verdict.
   2. **⚖️ RISK & OPPORTUNITY MATRIX:** Balance technical flaws or nuisances with economic upsides (Employment hubs, transport, demand).
-  3. **🏗️ TECHNICAL INTEGRITY:** Justify the works budget based on your visual analysis of photos and EPC data.
+  3. **🏗️ TECHNICAL INTEGRITY:** Justify the works budget based on your visual analysis of photos, EPC data, and the market rates you found.
   4. **💰 FINANCIAL ENGINEERING:** Detail the ROI, Net-Net Cash Flow, and Pledging strategy.
   5. **🚀 NEGOTIATION STRATEGY:** Practical arguments to align price with the objective intrinsic value based on facts.
   

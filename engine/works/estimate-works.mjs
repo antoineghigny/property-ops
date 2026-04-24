@@ -14,62 +14,49 @@ export function estimateWorks(caseData, constructionPack) {
   const label = String(caseData.energy?.label || '').toUpperCase();
   const condition = caseData.typology.condition_kind || 'unknown';
   
-  // CRITICAL HUNTER MODE: Aggressive coefficients for old/unknown stock
-  const rules = constructionPack?.rules || {
-    light_refresh: { low_per_m2: 150, high_per_m2: 300 }, // Was 75-150
-    functional_upgrade: { low_per_m2: 400, high_per_m2: 650 }, // Was 250-450
-    energy_upgrade_standard: { low_per_m2: 250, high_per_m2: 500 },
-    energy_upgrade_heavy: { low_per_m2: 500, high_per_m2: 1000 },
-    heavy_renovation_standard: { low_per_m2: 800, high_per_m2: 1200 },
-    heavy_renovation_old_building: { low_per_m2: 1200, high_per_m2: 2000 }, // Realistic full overhaul
+  // DYNAMIC RATES HIERARCHY
+  // 1. Injected by Agent research (meta.construction_rates)
+  // 2. Official Pack data (constructionPack)
+  // 3. Fallback (Conservative historical defaults)
+  const metaRates = caseData.meta?.construction_rates || {};
+  const packRules = constructionPack?.rules || {};
+
+  const rules = {
+    light: metaRates.refresh || packRules.light_refresh?.low_per_m2 || 350,
+    light_high: metaRates.refresh_high || packRules.light_refresh?.high_per_m2 || 800,
+    complete: metaRates.complete || packRules.functional_upgrade?.low_per_m2 || 1000,
+    complete_high: metaRates.complete_high || packRules.functional_upgrade?.high_per_m2 || 1800,
+    structural: metaRates.structural || packRules.heavy_renovation_structural?.low_per_m2 || 1800,
+    structural_high: metaRates.structural_high || packRules.heavy_renovation_structural?.high_per_m2 || 3000,
   };
 
-  const light = band(area, rules.light_refresh.low_per_m2, rules.light_refresh.high_per_m2);
-  const functional = band(area, rules.functional_upgrade.low_per_m2, rules.functional_upgrade.high_per_m2);
-  
-  const isHeavyEnergy = ['E', 'F', 'G'].includes(label);
-  const energy = isHeavyEnergy 
-    ? band(area, rules.energy_upgrade_heavy.low_per_m2, rules.energy_upgrade_heavy.high_per_m2)
-    : band(area, rules.energy_upgrade_standard.low_per_m2, rules.energy_upgrade_standard.high_per_m2);
-    
-  const isOldBuilding = condition === 'old' || condition === 'unknown';
-  const heavy = isOldBuilding
-    ? band(area, rules.heavy_renovation_old_building.low_per_m2, rules.heavy_renovation_old_building.high_per_m2)
-    : band(area, rules.heavy_renovation_standard.low_per_m2, rules.heavy_renovation_standard.high_per_m2);
+  const light = band(area, rules.light, rules.light_high);
+  const functional = band(area, rules.complete, rules.complete_high);
+  const structural = band(area, rules.structural, rules.structural_high);
 
-  // Pessimistic allocation: always pick the higher need
-  const immediate = ['E', 'F', 'G'].includes(label) ? energy.central : functional.central;
-  const within12Months = isOldBuilding ? heavy.low : functional.central;
+  // LOGIQUE DE DÉCISION (BASÉE SUR L'ÉTAT ET LE PEB)
+  const isHeavyEnergy = ['E', 'F', 'G'].includes(label);
+  const isStructuralNeed = condition === 'structural_renovation' || condition === 'ruin';
+  
+  // Selection of the most prudent band
+  let immediate = light.central;
+  if (isStructuralNeed) immediate = structural.central;
+  else if (isHeavyEnergy) immediate = functional.central;
+
+  const within12Months = isStructuralNeed ? structural.high : (isHeavyEnergy ? functional.high : light.central);
 
   return {
     packages: {
-      light_refresh: {
-        ...light,
-        assumptions: ['Cosmetic refresh only.'],
-        confidence: 'low',
-      },
-      functional_upgrade: {
-        ...functional,
-        assumptions: ['Kitchen, sanitary, or system refresh without structural works.'],
-        confidence: 'low',
-      },
-      energy_upgrade: {
-        ...energy,
-        assumptions: ['Envelope, heating, or glazing upgrades based on energy label.'],
-        confidence: isHeavyEnergy ? 'medium' : 'low',
-      },
-      heavy_renovation: {
-        ...heavy,
-        assumptions: ['Large-scale interior or technical overhaul.'],
-        confidence: 'low',
-      },
+      light_refresh: light,
+      functional_upgrade: functional,
+      heavy_renovation: structural,
     },
     immediate_works_estimate: immediate,
     works_12_months_estimate: within12Months,
     manual_review_required: true,
     notes: [
-      'HUNTER MODE: Provisions are highly aggressive to account for hidden technical debt.',
-      'Professional quotes remain required before final commitment.',
+      `Estimation based on ${metaRates.refresh ? 'Real-time Market Research' : 'Regional Baseline Packs'}.`,
+      'Professional onsite inspection is mandatory before final commitment.',
     ],
   };
 }
