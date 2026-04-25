@@ -71,6 +71,7 @@ export const PropertyCaseSchema = z.object({
     terrace_area_m2: z.number().nullable().optional(),
     garden_area_m2: z.number().nullable().optional(),
     bedrooms: z.number().nullable().optional(),
+    bedrooms_count: z.number().nullable().optional(), // AI compatibility
     bathrooms: z.number().nullable().optional(),
     wc_count: z.number().nullable().optional(),
     floor: z.number().nullable().optional(),

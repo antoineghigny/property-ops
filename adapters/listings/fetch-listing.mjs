@@ -50,6 +50,12 @@ export async function ingestFromUrl(url, requestedCaseId = null) {
 
   const $ = load(html);
   const bodyText = $('body').text().replace(/\s+/g, ' ').trim();
+  
+  // BOT PROTECTION CHECK
+  if (bodyText.includes('dd=') || bodyText.includes('captcha-delivery') || bodyText.includes('blocked by bot protection')) {
+    throw new Error(`BLOCK_DETECTED: Ingestion blocked by anti-bot protection on ${new URL(url).hostname}. Manual data extraction required.`);
+  }
+
   const metaTags = $('meta').map((_, el) => {
     const name = $(el).attr('name') || $(el).attr('property');
     const content = $(el).attr('content');

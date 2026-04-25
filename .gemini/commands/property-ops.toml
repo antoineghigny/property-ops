@@ -66,23 +66,40 @@ If "$ARGUMENTS" contains multiple property listing URLs (space or comma separate
 - **BATCH MODE ACTIVE:** Inform the user that you are starting a batch analysis.
 - **PHASE 1 (Strategy Interview):** Perform the mandatory strategy interview ONCE for the entire batch.
 - **LOOP EXECUTION:** For each URL provided:
-  1. Use Bash to run `npm run ingest -- --url "<url>"`.
-  2. AI CLASSIFICATION: Extract technicals from the `raw_dump`. Use enums: mixed, house, apartment, structural_renovation, renovated.
-  3. SEARCH: Local Economics, Market Pulse, Construction Rates 2026.
-  4. INJECT: Use `replace` on `case.json` to store extracted findings.
-  5. ANALYZE: Run `npm run analyze -- --case "<case-id>"`.
-- **FINAL SUMMARY:** Show a consolidated table of all results. Offer to run `show BUY` to see the details.
+  1. Execute the SINGLE-URL logic (Ingest, Triage, Analyze) in a loop.
+- **FINAL SUMMARY:** Show a consolidated table of all results.
 
 ### LOGIQUE SINGLE-URL (STANDARD)
-If "$ARGUMENTS" looks like a single property listing URL:
 - **PHASE 1: PRE-FLIGHT INTERVIEW (MANDATORY)**
   Ask about Intent, Strategy, and Leverage (Conditional if securities > 0) using `ask_user`.
-- **PHASE 2: DUE DILIGENCE & EXTRACTION**
-  Run ingestion, AI triage (Enums required), Web searches, and Data injection into `case.json`.
+  *(Skip this if part of a Batch where strategy was already defined).*
+
+- **PHASE 2: DUE DILIGENCE & AI EXTRACTION**
+  1. **RAW INGESTION:** Use Bash to run `npm run ingest -- --url "<url>"`.
+  2. **BLOCK DETECTION:** If the ingestion fails with `BLOCK_DETECTED`, do NOT retry. Use `google_web_search` immediately to find the property details (price, area, EPC, state).
+  3. **DATA TRIAGE (MANDATORY):** Read `data/cases/<case-id>/case.json`. 
+  
+  **STRICT DATA DICTIONARY (ENUMS):** When injecting data via the `replace` tool, you MUST use these exact allowed values:
+  - `typology.property_kind`: **house**, **apartment**, **income_building**, **land**, **mixed**, **unknown**
+  - `typology.condition_kind`: **new**, **old**, **renovated**, **structural_renovation**, **ruin**, **unknown**
+  
+  **STRUCTURED INJECTION TEMPLATE:** You MUST use a SINGLE `replace` tool call to inject all extracted data. Template:
+  ```json
+  "meta": {
+    "workflow_state": "enriched",
+    "market_m2_price": <number>,
+    "construction_rates": <"refresh"|"complete"|"structural"|object>,
+    "local_insights": [<string>, <string>]
+  }
+  ```
+  Also update all other fields (typolology, economics, energy) in the same turn.
+
 - **PHASE 3: SCRIPT EXECUTION**
-  Run `npm run analyze -- --case "<case-id>"`.
+  Use Bash to run `npm run analyze -- --case "<case-id>"`.
+
 - **PHASE 4: MASTER INVESTMENT MEMORANDUM**
-  Display the generated `deep-report.md`. Mandatory tables: Decision Dashboard, Post-Renovation Equity Audit.
+  Display the generated `deep-report.md`. 
+  **STRICT RULE:** You MUST display the **🎯 DECISION DASHBOARD** and the **📈 POST-RENOVATION EQUITY AUDIT** tables exactly as generated.
 
 If execution fails, explain the failure and show the fallback command.
 """
