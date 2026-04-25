@@ -2,9 +2,6 @@ import { chromium } from 'playwright';
 import { load } from 'cheerio';
 import { nowIso, slugify } from '../../engine/shared/utils.mjs';
 
-/**
- * GENERATE ELITE BROWSER HEADERS (MacOS/Chrome Signature)
- */
 function getRealisticHeaders(url) {
   const host = new URL(url).hostname;
   return {
@@ -45,7 +42,6 @@ async function fetchWithBrowser(url) {
 
   const page = await context.newPage();
   
-  // ELITE EVASION SCRIPT
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
     window.chrome = { runtime: {} };
@@ -53,7 +49,6 @@ async function fetchWithBrowser(url) {
   });
 
   try {
-    // Referrer warm-up
     await page.goto('https://www.google.be/search?q=immoweb+investir', { waitUntil: 'domcontentloaded' });
     await page.waitForTimeout(1000);
     
@@ -69,16 +64,14 @@ async function fetchWithBrowser(url) {
 }
 
 export async function ingestFromUrl(url, requestedCaseId = null) {
-  // 1. TRY ELITE FETCH FIRST (Avoids JS probes)
   let html = await fetchWithSimpleGet(url);
   
-  // 2. FALLBACK TO ELITE BROWSER
   if (!html) {
     html = await fetchWithBrowser(url);
   }
 
   if (!html) {
-    throw new Error(`BLOCK_DETECTED: Technical block. Transitioning to Web Search fallback.`);
+    throw new Error(`BLOCK_DETECTED: Ingestion blocked by anti-bot protection. Manual data extraction required.`);
   }
 
   const $ = load(html);
